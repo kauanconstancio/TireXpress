@@ -1,0 +1,65 @@
+@import '../../global/global.css';
+
+body{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+body img{
+    width: 300px;
+}
+
+body form{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+body form .inputs{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    flex-direction: column;
+}
+
+body form .inputs input{
+    display: flex;
+    width: 300px;
+    padding: 18px 14px;
+    border: none;
+    border-radius: 32px;
+    background-color: var(--background-button);
+}
+
+body form #loginButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    padding: 18px 14px;
+    border: none;
+    border-radius: 32px;
+    background-color: var(--background-button-yellow);
+    font-weight: 600;
+}
+
+body form a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -35px;
+    color: var(--background-button-yellow);
+}
+
+body .footer{
+    display: flex;
+    margin-top: 170px;
+}
+
+body .footer a{
+    color: var(--background-button-yellow);
+}
