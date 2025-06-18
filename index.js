@@ -11,5 +11,11 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+//rota de cadastro
+app.post('/cadastro', (req,res) => {
+console.log(req.body);
+res.send('Ok!');
+});
+
 // Iniciar o servidor
 app.listen(3000, () => console.log('Rodando na porta 3000...'));
