@@ -1,0 +1,47 @@
+@import 'assets/styles/global/global.css';
+
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+}
+
+body img{
+    width: 300px;
+}
+
+body h1{
+    color: var(--primary-color);
+    margin-top: -50px;
+}
+
+body i{
+    color: var(--primary-color);
+    font-size: 60px;
+}
+
+body .buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    gap: 30px;
+}
+
+body .buttons a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 18px 14px;
+    border: none;
+    border-radius: 32px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 1px;
+    cursor: pointer;
+}

@@ -5,3 +5,7 @@
     text-decoration: none;
     font-family: 'Poppins', sans-serif;
 }
+
+body{
+    padding: 20px 40px;
+}
