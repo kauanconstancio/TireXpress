@@ -1,4 +1,4 @@
-@import '../../../global/global.css';
+@import '../global/global.css';
 
 body{
     display: flex;
@@ -25,38 +25,6 @@ body form .inputs{
     flex-direction: column;
 }
 
-body form .inputs .inputImage{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    outline: none;
-    overflow: hidden;
-}
-
-body form .inputs .inputImage .picture__image{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 200px;
-    height: 200px;
-    border: 3px solid var(--primary-color);
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-body form .inputs .inputImage .picture__image i{
-    font-size: 40px;
-}
-
-body form .inputs .inputImage .imageInput{
-    display: none;
-}
-
 body form .inputs input{
     display: flex;
     width: 100%;
@@ -65,11 +33,6 @@ body form .inputs input{
     border-radius: 32px;
     background-color: var(--background-button);
     outline: none;
-}
-
-body form .inputs .address{
-    display: flex;
-    gap: 20px;
 }
 
 body form .inputs .password{
