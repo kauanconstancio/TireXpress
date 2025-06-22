@@ -67,14 +67,17 @@ body form .inputs input{
     outline: none;
 }
 
+body form .inputs .address, .password{
+    gap: 10px;
+}
+
 body form .inputs .address{
     display: flex;
-    gap: 20px;
 }
+
 
 body form .inputs .password{
     display: flex;
-    gap: 20px;
 }
 
 body form .inputs .password input{
