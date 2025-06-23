@@ -10,7 +10,7 @@ body{
 }
 
 body iframe{
-    height: 700px;
+    height: 60vh;
     width: 100vw;
 }
 
