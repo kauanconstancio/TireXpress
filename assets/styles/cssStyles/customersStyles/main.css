@@ -1,0 +1,53 @@
+@import '../../global/global.css';
+
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 40px;
+}
+
+body iframe{
+    height: 650px;
+}
+
+body .services{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 25px;
+    margin: 30px 40px;
+    padding: 20px;
+    width: 100%;
+    box-shadow: 0px 0px 50px 4px rgba(0,0,0,0.1);
+    border-radius: 16px;
+}
+
+body .services .servicesOption{
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+
+body .services .servicesOption button{
+    width: 100%;
+    padding: 15px 10px;
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 16px;
+    border: none;
+}
+
+body .services .searchButton{
+    width: 100%;
+    padding: 30px 10px;
+    border-radius: 16px;
+    font-size: 20px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 26px;
+    font-weight: 600;
+    border: none;
+}
