@@ -9,9 +9,10 @@ body{
     height: 100%;
 }
 
-/* body iframe{
+body iframe{
     height: 700px;
-} */
+    width: 100vw;
+}
 
 body .services{
     display: flex;
