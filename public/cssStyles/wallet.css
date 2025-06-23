@@ -1,4 +1,4 @@
-@import '../../global/global.css';
+@import 'global.css';
 
 body{
     display: flex;
