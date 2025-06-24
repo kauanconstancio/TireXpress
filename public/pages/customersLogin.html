@@ -31,7 +31,7 @@
 
 
 
-    
+
     <script>
         document.getElementById("loginButton").addEventListener("click", async () => {
             const email = document.querySelector("input[type='email']").value;
@@ -48,7 +48,7 @@
             if (res.ok) {
                 alert("Login realizado com sucesso!");
                 // Redirecionar para página do cliente
-                window.location.href = "/pages/customersMain.html";
+                window.location.href = "/pages/customerMain.html";
             } else {
                 alert("Erro: " + result.erro);
             }
