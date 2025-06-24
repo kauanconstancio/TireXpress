@@ -12,13 +12,13 @@ body img{
     width: 300px;
 }
 
-body form{
+body .form{
     display: flex;
     flex-direction: column;
     gap: 50px;
 }
 
-body form .inputs{
+body .form .inputs{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,7 +26,7 @@ body form .inputs{
     flex-direction: column;
 }
 
-body form .inputs input{
+body .form .inputs input{
     display: flex;
     width: 300px;
     padding: 18px 14px;
@@ -36,7 +36,7 @@ body form .inputs input{
     outline: none;
 }
 
-body form #loginButton{
+body .form #loginButton{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -51,7 +51,7 @@ body form #loginButton{
     letter-spacing: 1px;
 }
 
-body form a{
+body .form a{
     display: flex;
     align-items: center;
     justify-content: center;

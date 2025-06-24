@@ -11,13 +11,13 @@ body img{
     width: 300px;
 }
 
-body form{
+body .form{
     display: flex;
     flex-direction: column;
     gap: 50px;
 }
 
-body form .inputs{
+body .form .inputs{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -25,7 +25,7 @@ body form .inputs{
     flex-direction: column;
 }
 
-body form .inputs .inputImage{
+body .form .inputs .inputImage{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,7 +36,7 @@ body form .inputs .inputImage{
     overflow: hidden;
 }
 
-body form .inputs .inputImage .picture__image{
+body .form .inputs .inputImage .picture__image{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -49,15 +49,15 @@ body form .inputs .inputImage .picture__image{
     cursor: pointer;
 }
 
-body form .inputs .inputImage .picture__image i{
+body .form .inputs .inputImage .picture__image i{
     font-size: 40px;
 }
 
-body form .inputs .inputImage .imageInput{
+body .form .inputs .inputImage .imageInput{
     display: none;
 }
 
-body form .inputs input{
+body .form .inputs input{
     display: flex;
     width: 100%;
     padding: 18px 14px;
@@ -67,24 +67,24 @@ body form .inputs input{
     outline: none;
 }
 
-body form .inputs .address, .password{
+body .form .inputs .address, .password{
     gap: 10px;
 }
 
-body form .inputs .address{
+body .form .inputs .address{
     display: flex;
 }
 
 
-body form .inputs .password{
+body .form .inputs .password{
     display: flex;
 }
 
-body form .inputs .password input{
+body .form .inputs .password input{
     width: 100%;
 }
 
-body form #registerButton{
+body .form #registerButton{
     display: flex;
     align-items: center;
     justify-content: center;
