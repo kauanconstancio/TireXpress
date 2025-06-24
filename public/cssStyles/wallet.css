@@ -18,7 +18,7 @@ body .topbar{
     background-color: var(--primary-color);
     color: var(--white);
     font-weight: 600;
-    font-size: 16px;
+    font-size: 18px;
     letter-spacing: 1px;
     gap: 110px;
 }
