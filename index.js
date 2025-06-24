@@ -18,6 +18,24 @@ app.post('/cadastro', (req, res) => {
   });
 });
 
+app.post('/cadastro-trabalhador', (req, res) => {
+  const {
+    name, email, cpf, phone,
+    cnpj, endereco, numero, referencia, password
+  } = req.body;
+
+  const query = `
+    INSERT INTO workers (name, email, cpf, phone, cnpj, endereco, numero, referencia, password)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  db.run(query, [name, email, cpf, phone, cnpj, endereco, numero, referencia, password], function (err) {
+    if (err) return res.status(500).send({ erro: err.message });
+    res.status(201).send({ id: this.lastID });
+  });
+});
+
+
 // Página principal
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'pages', 'index.html'));

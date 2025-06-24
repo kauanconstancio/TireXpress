@@ -15,19 +15,19 @@
                 <input class="imageInput" type="file" accept="image/*">
                 <span class="picture__image"></span>
             </label>
-            <input type="text" placeholder="Nome completo" required>
-            <input type="email" placeholder="Email" required>
-            <input type="number" placeholder="CPF" required>
-            <input type="number" placeholder="Número de telefone" required>
-            <input type="number" placeholder="CNPJ" required>
+            <input type="text" name="name" placeholder="Nome completo" required>
+            <input type="email" name="email"placeholder="Email" required>
+            <input type="number" name="cpf" placeholder="CPF" required>
+            <input type="number" name="phone" placeholder="Número de telefone" required>
+            <input type="number" name="cnpj" placeholder="CNPJ" required>
             <input type="text" placeholder="Endereço" required>
             <div class="address">
-                <input type="number" placeholder="Número">
-                <input type="text" placeholder="Ponto de referência">
+                <input type="number" name="numero" placeholder="Número">
+                <input type="text" name="endereco" placeholder="Ponto de referência">
             </div>
             <div class="password">
-                <input type="password" placeholder="Senha" required>
-                <input type="password" placeholder="Confirme sua senha" required>
+                <input type="password" name="password" placeholder="Senha" required>
+                <input type="password" name="confirmPassword" placeholder="Confirme sua senha" required>
             </div>
         </div>
         <input id="registerButton" type="submit" value="CONCLUIR CADASTRO">
@@ -78,6 +78,48 @@
                 pictureImage.innerHTML = pictureImageTxt;
             }
         });
+    }
+});
+
+document.getElementById("registerButton").addEventListener("click", async () => {
+    const name = document.querySelector("input[name='name']").value;
+    const email = document.querySelector("input[name='email']").value;
+    const cpf = document.querySelector("input[name='cpf']").value;
+    const phone = document.querySelector("input[name='phone']").value;
+    const cnpj = document.querySelector("input[name='cnpj']").value;
+    const endereco = document.querySelector("input[placeholder='Endereço']").value;
+    const numero = document.querySelector("input[name='numero']").value;
+    const referencia = document.querySelector("input[name='endereco']").value;
+    const password = document.querySelector("input[name='password']").value;
+    const confirmPassword = document.querySelector("input[name='confirmPassword']").value;
+
+    if (password !== confirmPassword) {
+        alert("As senhas não coincidem!");
+        return;
+    }
+
+    const data = {
+        name, email, cpf, phone,
+        cnpj, endereco, numero, referencia, password
+    };
+
+    try {
+        const res = await fetch("/cadastro-trabalhador", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+            alert("Cadastro realizado com sucesso! ID: " + result.id);
+            window.location.href = "/pages/workersLogin.html";
+        } else {
+            alert("Erro ao cadastrar: " + result.erro);
+        }
+    } catch (err) {
+        alert("Erro ao conectar com o servidor.");
+        console.error(err);
     }
 });
     </script>

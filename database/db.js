@@ -10,18 +10,35 @@ const db = new sqlite3.Database(dbPath, (err) => {
   console.log('Conectado ao banco de dados SQLite.');
 });
 
-// Criar tabela de clientes (exemplo)
+// Criar tabelas
 db.serialize(() => {
-db.run(`
-  CREATE TABLE IF NOT EXISTS customers (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    email TEXT UNIQUE NOT NULL,
-    cpf TEXT NOT NULL,
-    phone TEXT NOT NULL,
-    password TEXT NOT NULL
-  )
-`);
+  // Tabela de clientes
+  db.run(`
+    CREATE TABLE IF NOT EXISTS customers (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      cpf TEXT NOT NULL,
+      phone TEXT NOT NULL,
+      password TEXT NOT NULL
+    )
+  `);
+
+  // Tabela de trabalhadores
+  db.run(`
+    CREATE TABLE IF NOT EXISTS workers (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      cpf TEXT NOT NULL,
+      phone TEXT NOT NULL,
+      cnpj TEXT NOT NULL,
+      endereco TEXT NOT NULL,
+      numero TEXT,
+      referencia TEXT,
+      password TEXT NOT NULL
+    )
+  `);
 });
 
 module.exports = db;
