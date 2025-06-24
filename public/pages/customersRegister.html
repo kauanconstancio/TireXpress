@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TireXpress Register</title>
     <link rel="stylesheet" href="../cssStyles/customersRegister.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
     <img src="../logo/tirexpress-logo.svg" alt="Logo">
     <div class="form">
@@ -21,10 +25,10 @@
             <input type="tel" name="phone" placeholder="Número de telefone" required>
             <input type="password" name="password" placeholder="Senha" required>
             <input type="password" name="confirmPassword" placeholder="Confirme sua senha" required>
-            </div>
         </div>
     </div>
-        <button id="registerButton">CONCLUIR CADASTRO</button>
+    </div>
+    <button id="registerButton">CONCLUIR CADASTRO</button>
     <div class="footer">
         <p>Já tem uma conta? <a href="customersLogin.html">Entrar!</a></p>
     </div>
@@ -34,80 +38,81 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-    // --- LÓGICA PARA PRÉ-VISUALIZAÇÃO DA FOTO ---
-    const inputFile = document.querySelector(".imageInput");
-    const pictureImage = document.querySelector(".picture__image");
-    const pictureImageTxt = '<i class="fa-solid fa-plus"></i>Envie uma foto';
+            // --- LÓGICA PARA PRÉ-VISUALIZAÇÃO DA FOTO ---
+            const inputFile = document.querySelector(".imageInput");
+            const pictureImage = document.querySelector(".picture__image");
+            const pictureImageTxt = '<i class="fa-solid fa-plus"></i>Envie uma foto';
 
-    // Garante que os elementos existem antes de adicionar os listeners
-    if (inputFile && pictureImage) {
-        pictureImage.innerHTML = pictureImageTxt;
-
-        inputFile.addEventListener("change", function (e) {
-            const file = e.target.files[0];
-
-            if (file) {
-                // Melhoria: Validar se o arquivo é uma imagem
-                if (!file.type.startsWith('image/')) {
-                    alert('Por favor, selecione um arquivo de imagem.');
-                    inputFile.value = ""; // Limpa a seleção
-                    pictureImage.innerHTML = pictureImageTxt;
-                    return;
-                }
-
-                const reader = new FileReader();
-
-                reader.addEventListener("load", function (e) {
-                    const img = document.createElement("img");
-                    img.src = e.target.result;
-                    img.classList.add("picture__img");
-
-                    pictureImage.innerHTML = "";
-                    pictureImage.appendChild(img);
-                });
-
-                reader.readAsDataURL(file);
-            } else {
+            // Garante que os elementos existem antes de adicionar os listeners
+            if (inputFile && pictureImage) {
                 pictureImage.innerHTML = pictureImageTxt;
+
+                inputFile.addEventListener("change", function (e) {
+                    const file = e.target.files[0];
+
+                    if (file) {
+                        // Melhoria: Validar se o arquivo é uma imagem
+                        if (!file.type.startsWith('image/')) {
+                            alert('Por favor, selecione um arquivo de imagem.');
+                            inputFile.value = ""; // Limpa a seleção
+                            pictureImage.innerHTML = pictureImageTxt;
+                            return;
+                        }
+
+                        const reader = new FileReader();
+
+                        reader.addEventListener("load", function (e) {
+                            const img = document.createElement("img");
+                            img.src = e.target.result;
+                            img.classList.add("picture__img");
+
+                            pictureImage.innerHTML = "";
+                            pictureImage.appendChild(img);
+                        });
+
+                        reader.readAsDataURL(file);
+                    } else {
+                        pictureImage.innerHTML = pictureImageTxt;
+                    }
+                });
             }
         });
-    }
-});
 
-document.getElementById("registerButton").addEventListener("click", async () => {
-    const name = document.querySelector("input[name='name']").value;
-    const email = document.querySelector("input[name='email']").value;
-    const cpf = document.querySelector("input[name='cpf']").value;
-    const phone = document.querySelector("input[name='phone']").value;
-    const password = document.querySelector("input[name='password']").value;
-    const confirmPassword = document.querySelector("input[name='confirmPassword']").value;
+        document.getElementById("registerButton").addEventListener("click", async () => {
+            const name = document.querySelector("input[name='name']").value;
+            const email = document.querySelector("input[name='email']").value;
+            const cpf = document.querySelector("input[name='cpf']").value;
+            const phone = document.querySelector("input[name='phone']").value;
+            const password = document.querySelector("input[name='password']").value;
+            const confirmPassword = document.querySelector("input[name='confirmPassword']").value;
 
-    if (password !== confirmPassword) {
-        alert("As senhas não coincidem!");
-        return;
-    }
+            if (password !== confirmPassword) {
+                alert("As senhas não coincidem!");
+                return;
+            }
 
-    const data = { name, email, cpf, phone, password };
+            const data = { name, email, cpf, phone, password };
 
-    try {
-        const res = await fetch("/cadastro", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
+            try {
+                const res = await fetch("/cadastro", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await res.json();
+                if (res.ok) {
+                    alert("Cadastro realizado com sucesso! ID: " + result.id);
+                    window.location.href = "/pages/customersLogin.html";
+                } else {
+                    alert("Erro ao cadastrar: " + result.erro);
+                }
+            } catch (err) {
+                alert("Erro ao conectar com o servidor.");
+                console.error(err);
+            }
         });
-
-        const result = await res.json();
-        if (res.ok) {
-            alert("Cadastro realizado com sucesso! ID: " + result.id);
-            window.location.href = "/pages/customersLogin.html";
-        } else {
-            alert("Erro ao cadastrar: " + result.erro);
-        }
-    } catch (err) {
-        alert("Erro ao conectar com o servidor.");
-        console.error(err);
-    }
-});
     </script>
 </body>
+
 </html>

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TireXpress Login</title>
     <link rel="stylesheet" href="../cssStyles/customersLogin.css">
 </head>
+
 <body>
     <img src="../logo/tirexpress-logo.svg" alt="Logo">
     <div class="form">
@@ -19,5 +21,40 @@
     <div class="footer">
         <p>Não tem uma conta? <a href="customersRegister.html">Cadastre-se!</a></p>
     </div>
+
+
+
+
+
+
+
+
+
+
+    
+    <script>
+        document.getElementById("loginButton").addEventListener("click", async () => {
+            const email = document.querySelector("input[type='email']").value;
+            const password = document.querySelector("input[type='password']").value;
+
+            const res = await fetch("/login-cliente", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            });
+
+            const result = await res.json();
+
+            if (res.ok) {
+                alert("Login realizado com sucesso!");
+                // Redirecionar para página do cliente
+                window.location.href = "/pages/customersMain.html";
+            } else {
+                alert("Erro: " + result.erro);
+            }
+        });
+    </script>
+
 </body>
+
 </html>

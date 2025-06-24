@@ -31,10 +31,37 @@ app.post('/cadastro-trabalhador', (req, res) => {
 
   db.run(query, [name, email, cpf, phone, cnpj, endereco, numero, referencia, password], function (err) {
     if (err) return res.status(500).send({ erro: err.message });
-    res.status(201).send({ id: this.lastID });
+    res.status(201);
   });
 });
 
+// Login de cliente
+app.post('/login-cliente', (req, res) => {
+  const { email, password } = req.body;
+
+  const query = `SELECT * FROM customers WHERE email = ? AND password = ?`;
+
+  db.get(query, [email, password], (err, user) => {
+    if (err) return res.status(500).send({ erro: err.message });
+    if (!user) return res.status(401).send({ erro: 'Email ou senha incorretos' });
+
+    res.status(200).send({ mensagem: 'Login realizado com sucesso', user });
+  });
+});
+
+// Login de trabalhador
+app.post('/login-trabalhador', (req, res) => {
+  const { email, password } = req.body;
+
+  const query = `SELECT * FROM workers WHERE email = ? AND password = ?`;
+
+  db.get(query, [email, password], (err, worker) => {
+    if (err) return res.status(500).send({ erro: err.message });
+    if (!worker) return res.status(401).send({ erro: 'Email ou senha incorretos' });
+
+    res.status(200).send({ mensagem: 'Login realizado com sucesso', worker });
+  });
+});
 
 // Página principal
 app.get('/', (req, res) => {

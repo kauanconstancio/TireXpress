@@ -13,11 +13,44 @@
             <input type="email" placeholder="Email" required>
             <input type="password" placeholder="Senha" required>
         </div>
-        <input id="loginButton" type="submit" value="CONCLUIR CADASTRO">
+        <input id="loginButton" type="submit" value="ENTRAR">
         <a href="../globalPages/passwordLoss.html">Esqueceu a senha?</a>
     </div>
     <div class="footer">
         <p>Não tem uma conta? <a href="workersRegister.html">Cadastre-se!</a></p>
     </div>
+
+
+
+
+
+
+
+
+
+    
+    <script>
+document.getElementById("loginButton").addEventListener("click", async () => {
+  const email = document.querySelector("input[type='email']").value;
+  const password = document.querySelector("input[type='password']").value;
+
+  const res = await fetch("/login-trabalhador", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password })
+  });
+
+  const result = await res.json();
+
+  if (res.ok) {
+    alert("Login realizado com sucesso!");
+    // Redirecionar para página do trabalhador
+    window.location.href = "/pages/workersMain.html";
+  } else {
+    alert("Erro: " + result.erro);
+  }
+});
+</script>
+
 </body>
 </html>
