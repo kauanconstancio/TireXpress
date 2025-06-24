@@ -20,7 +20,7 @@ body .services{
     justify-content: center;
     flex-direction: column;
     gap: 25px;
-    margin: 20px 0 0 0;
+    margin: 10px 0 0 0;
     padding: 20px;
     width: 100%;
     box-shadow: 0px 0px 50px 4px rgba(0,0,0,0.1);
@@ -35,8 +35,8 @@ body .services .servicesOption{
 
 body .services .servicesOption button{
     width: 100%;
-    padding: 10px 10px;
-    font-size: 16px;
+    padding: 10px;
+    font-size: 14px;
     font-weight: 500;
     border-radius: 16px;
     border: none;
