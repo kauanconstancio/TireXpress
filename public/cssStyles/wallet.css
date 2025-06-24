@@ -11,6 +11,7 @@ body{
 body .topbar{
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 100%;
     padding: 10px 14px;
     border: none;
@@ -20,12 +21,13 @@ body .topbar{
     font-weight: 600;
     font-size: 18px;
     letter-spacing: 1px;
-    gap: 110px;
 }
 
 body .topbar a{
     color: var(--white);
     font-size: 25px;
+    position: fixed;
+    left: 60px;
 }
 
 body .balance{

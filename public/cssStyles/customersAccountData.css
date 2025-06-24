@@ -1,4 +1,4 @@
-@import "global.css";
+@import 'global.css';
 
 body{
     display: flex;
@@ -30,51 +30,28 @@ body .topbar a{
     left: 60px;
 }
 
-body .user{
+body .informations{
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    gap: 15px;
-}
-
-body .user img{
-    width: 200px;
-    height: 200px;
-    border: 1px solid var(--black);
-    border-radius: 50%;
-}
-
-body .user p{
-    font-weight: 500;
-}
-
-body .pages{
-    display: flex;
     flex-direction: column;
-    justify-content: center;
     width: 100%;
-    gap: 20px;
+    gap: 30px;
 }
 
-body .pages a{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+body .informations .name p,
+.email p,
+.cpf p,
+.number p{
+    font-weight: 400;
+}
+
+body .informations .name h3,
+.email h3,
+.cpf h3,
+.number h3{
+    font-size: 16px;
+    border: 1px solid var(--black);
     padding: 10px;
     border-radius: 12px;
-    width: 100%;
-    background-color: var(--primary-color);
-    color: var(--white);
     font-weight: 500;
-}
-
-body .pages a .left{
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-body .pages a i{
-    font-size: 20px;
 }
