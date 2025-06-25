@@ -1,7 +1,6 @@
 @import 'global.css';
 
 body{
-    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,6 +15,8 @@ body .form{
     display: flex;
     flex-direction: column;
     gap: 50px;
+    max-width: 500px;
+    width: 100%;
 }
 
 body .form .inputs{
@@ -28,10 +29,10 @@ body .form .inputs{
 
 body .form .inputs input{
     display: flex;
-    width: 300px;
+    width: 100%;
     padding: 18px 14px;
     border: none;
-    border-radius: 32px;
+    border-radius: var(--radius);
     background-color: var(--background-button);
     outline: none;
 }
@@ -40,10 +41,10 @@ body .form #loginButton{
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 300px;
+    width: 100%;
     padding: 18px 14px;
     border: none;
-    border-radius: 32px;
+    border-radius: var(--radius);
     background-color: var(--primary-color);
     color: var(--white);
     font-weight: 600;

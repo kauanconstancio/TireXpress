@@ -14,6 +14,7 @@ body img{
 body .form{
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 50px;
     width: 100%;
 }
@@ -60,10 +61,11 @@ body .form .inputs .inputImage .imageInput{
 
 body .form .inputs input{
     display: flex;
+    max-width: 500px;
     width: 100%;
     padding: 18px 14px;
     border: none;
-    border-radius: 32px;
+    border-radius: var(--radius);
     background-color: var(--background-button);
     outline: none;
 }
@@ -74,14 +76,14 @@ body .form .inputs .address, .password{
 
 body .form .inputs .address{
     display: flex;
+    max-width: 500px;
+    width: 100%;
 }
 
 
 body .form .inputs .password{
     display: flex;
-}
-
-body .form .inputs .password input{
+    max-width: 500px;
     width: 100%;
 }
 
@@ -89,10 +91,11 @@ body .form #registerButton{
     display: flex;
     align-items: center;
     justify-content: center;
+    max-width: 500px;
     width: 100%;
     padding: 18px 14px;
     border: none;
-    border-radius: 32px;
+    border-radius: var(--radius);
     background-color: var(--primary-color);
     color: var(--white);
     font-weight: 600;

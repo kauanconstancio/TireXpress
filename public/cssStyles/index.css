@@ -26,6 +26,7 @@ body .buttons {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  max-width: 500px;
   width: 100%;
   gap: 30px;
 }
@@ -37,7 +38,7 @@ body .buttons a {
   width: 100%;
   padding: 18px 14px;
   border: none;
-  border-radius: 32px;
+  border-radius: var(--radius);
   background-color: var(--primary-color);
   color: var(--white);
   font-weight: 600;

@@ -60,10 +60,11 @@ body .form .inputs .inputImage .imageInput{
 
 body .form .inputs input{
     display: flex;
+    max-width: 500px;
     width: 100%;
     padding: 18px 14px;
     border: none;
-    border-radius: 32px;
+    border-radius: var(--radius);
     background-color: var(--background-button);
     outline: none;
 }
@@ -81,11 +82,12 @@ body #registerButton{
     display: flex;
     align-items: center;
     justify-content: center;
+    max-width: 500px;
     width: 100%;
     padding: 18px 14px;
     margin-top: 50px;
     border: none;
-    border-radius: 32px;
+    border-radius: var(--radius);
     background-color: var(--primary-color);
     color: var(--white);
     font-weight: 600;
