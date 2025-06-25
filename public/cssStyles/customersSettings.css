@@ -1,4 +1,4 @@
-@import "global.css";
+@import 'global.css';
 
 body{
     display: flex;
@@ -21,7 +21,6 @@ body .topbar{
     font-weight: 600;
     font-size: 18px;
     letter-spacing: 1px;
-    max-width: 800px;
 }
 
 body .topbar a{
@@ -31,26 +30,7 @@ body .topbar a{
     left: 60px;
 }
 
-body .user{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-}
-
-body .user img{
-    width: 200px;
-    height: 200px;
-    border: 1px solid var(--black);
-    border-radius: 50%;
-}
-
-body .user p{
-    font-weight: 500;
-}
-
-body .pages{
+body .buttons{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -58,24 +38,17 @@ body .pages{
     gap: 20px;
 }
 
-body .pages a{
+body .buttons a{
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px;
+    border: 1px solid var(--black);
     border-radius: 12px;
-    width: 100%;
-    background-color: var(--primary-color);
-    color: var(--white);
+    color: var(--black);
     font-weight: 500;
 }
 
-body .pages a .left{
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-body .pages a i{
+body .buttons a i{
     font-size: 20px;
 }

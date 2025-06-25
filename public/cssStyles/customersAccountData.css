@@ -26,7 +26,7 @@ body .topbar{
 body .topbar a{
     color: var(--white);
     font-size: 25px;
-    position: fixed;
+    position: absolute;
     left: 60px;
 }
 
