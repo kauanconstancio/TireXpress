@@ -1,0 +1,99 @@
+@import 'global.css';
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 70px;
+}
+
+body .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 500px;
+    width: 100%;
+    padding: 24px 14px;
+    border: none;
+    border-radius: var(--radius);
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 1px;
+    gap: 20px;
+    max-width: 800px;
+}
+
+body .topbar a {
+    color: var(--white);
+    font-size: 25px;
+    position: absolute;
+    left: 60px;
+}
+
+body .servicesInput{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 500px;
+    width: 100%;
+    gap: 5px;
+}
+
+body .servicesInput select{
+    max-width: 500px;
+    width: 100%;
+    padding: 10px;
+    border-radius: var(--radius);
+}
+
+body .veicleInputs{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 500px;
+    width: 100%;
+    gap: 5px;
+}
+
+body .veicleInputs select{
+    max-width: 500px;
+    width: 100%;
+    padding: 10px;
+    border-radius: var(--radius);
+}
+
+
+body .textarea{
+    max-width: 500px;
+    width: 100%;
+    gap: 5px;
+}
+
+body .textarea textarea{
+    max-width: 500px;
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    resize: none;
+    border-radius: var(--radius);
+}
+
+body #requestService{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 500px;
+    width: 100%;
+    padding: 18px 14px;
+    border: none;
+    border-radius: var(--radius);
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
