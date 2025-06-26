@@ -1,0 +1,83 @@
+@import "global.css";
+
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 70px;
+}
+
+body .topbar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 500px;
+    width: 100%;
+    padding: 24px 14px;
+    border: none;
+    border-radius: var(--radius);
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+body .topbar a{
+    color: var(--white);
+    font-size: 25px;
+    position: absolute;
+    left: 60px;
+}
+
+body .user{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+body .user img{
+    width: 200px;
+    height: 200px;
+    border: 1px solid var(--black);
+    border-radius: 50%;
+}
+
+body .user p{
+    font-weight: 500;
+}
+
+body .pages{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 500px;
+    width: 100%;
+    gap: 20px;
+}
+
+body .pages a{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: var(--radius);
+    max-width: 500px;
+    width: 100%;
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-weight: 500;
+}
+
+body .pages a .left{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+body .pages a i{
+    font-size: 20px;
+}
