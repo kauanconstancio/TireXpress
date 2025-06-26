@@ -1,0 +1,47 @@
+@import './global.css';
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 80px;
+}
+
+body img {
+  width: 300px;
+}
+
+body .texts{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+body .texts h3{
+    color: var(--primary-color);
+}
+
+body #workersEmail{
+    font-weight: 500;
+}
+
+body a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 500px;
+    width: 100%;
+    padding: 18px 14px;
+    border: none;
+    border-radius: var(--radius);
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 1px;
+    margin-top: 130px;
+    cursor: pointer;
+}
