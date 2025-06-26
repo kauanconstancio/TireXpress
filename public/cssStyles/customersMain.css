@@ -9,11 +9,10 @@ body{
     height: 100%;
 }
 
-body iframe{
-    height: 55vh;
+body #map{
+    height: 60vh;
     max-width: 500px;
-    width: 100%;
-    border-radius: var(--radius);
+    width: 100vw;
 }
 
 body .services{
