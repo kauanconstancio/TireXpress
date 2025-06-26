@@ -1,0 +1,59 @@
+@import 'global.css';
+
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 70px;
+}
+
+body .topbar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 500px;
+    width: 100%;
+    padding: 24px 14px;
+    border: none;
+    border-radius: var(--radius);
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+body .topbar a{
+    color: var(--white);
+    font-size: 25px;
+    position: absolute;
+    left: 60px;
+}
+
+body .informations{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 500px;
+    width: 100%;
+    gap: 30px;
+}
+
+body .informations .name p,
+.email p,
+.cpf p,
+.number p{
+    font-weight: 400;
+}
+
+body .informations .name h3,
+.email h3,
+.cpf h3,
+.number h3{
+    font-size: 16px;
+    border: 1px solid var(--black);
+    padding: 10px;
+    border-radius: var(--radius);
+    font-weight: 500;
+}
