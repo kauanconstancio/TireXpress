@@ -24,7 +24,7 @@ db.serialize(() => {
     )
   `);
 
-  // Tabela de trabalhadores
+  // Tabela de trabalhadores com campos adicionais
   db.run(`
     CREATE TABLE IF NOT EXISTS workers (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -36,7 +36,9 @@ db.serialize(() => {
       endereco TEXT NOT NULL,
       numero TEXT,
       referencia TEXT,
-      password TEXT NOT NULL
+      password TEXT NOT NULL,
+      borracheiro INTEGER DEFAULT 0,
+      reboque INTEGER DEFAULT 0
     )
   `);
 });

@@ -1,12 +1,59 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const db = require('./database/db'); // importa o banco
+const sqlite3 = require('sqlite3').verbose();
+
+// Conexão com o banco
+const dbPath = path.join(__dirname, 'tirexpress.db');
+const db = new sqlite3.Database(dbPath, (err) => {
+  if (err) return console.error(err.message);
+  console.log('Conectado ao banco de dados SQLite.');
+});
+
+// Garantir criação das tabelas
+db.serialize(() => {
+  db.run(`
+    CREATE TABLE IF NOT EXISTS customers (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      cpf TEXT NOT NULL,
+      phone TEXT NOT NULL,
+      password TEXT NOT NULL
+    )
+  `);
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS workers (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      cpf TEXT,
+      phone TEXT NOT NULL,
+      cnpj TEXT,
+      endereco TEXT,
+      numero TEXT,
+      referencia TEXT,
+      password TEXT NOT NULL,
+      borracheiro INTEGER DEFAULT 0,
+      reboque INTEGER DEFAULT 0
+    )
+  `);
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS location (
+      id INTEGER PRIMARY KEY,
+      lat REAL,
+      lng REAL,
+      type TEXT UNIQUE
+    )
+  `);
+});
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Rota: Cadastrar cliente
+// Rota: Cadastro de cliente
 app.post('/cadastro', (req, res) => {
   const { name, email, cpf, phone, password } = req.body;
   const query = `INSERT INTO customers (name, email, cpf, phone, password) VALUES (?, ?, ?, ?, ?)`;
@@ -17,25 +64,27 @@ app.post('/cadastro', (req, res) => {
   });
 });
 
-// Rota: Cadastrar trabalhador
+// Rota: Cadastro de trabalhador
 app.post('/cadastro-trabalhador', (req, res) => {
   const {
     name, email, cpf, phone,
-    cnpj, endereco, numero, referencia, password
+    cnpj, endereco, numero, referencia, password,
+    borracheiro = 0,
+    reboque = 0
   } = req.body;
 
   const query = `
-    INSERT INTO workers (name, email, cpf, phone, cnpj, endereco, numero, referencia, password)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO workers (name, email, cpf, phone, cnpj, endereco, numero, referencia, password, borracheiro, reboque)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
-  db.run(query, [name, email, cpf, phone, cnpj, endereco, numero, referencia, password], function (err) {
+  db.run(query, [name, email, cpf, phone, cnpj, endereco, numero, referencia, password, borracheiro, reboque], function (err) {
     if (err) return res.status(500).send({ erro: err.message });
-    res.status(201).send({ mensagem: 'Trabalhador cadastrado com sucesso' });
+    res.status(201).send({ mensagem: 'Trabalhador cadastrado com sucesso', id: this.lastID });
   });
 });
 
-// Login: Cliente
+// Rota: Login de cliente
 app.post('/login-cliente', (req, res) => {
   const { email, password } = req.body;
   const query = `SELECT * FROM customers WHERE email = ? AND password = ?`;
@@ -48,7 +97,7 @@ app.post('/login-cliente', (req, res) => {
   });
 });
 
-// Login: Trabalhador
+// Rota: Login de trabalhador
 app.post('/login-trabalhador', (req, res) => {
   const { email, password } = req.body;
   const query = `SELECT * FROM workers WHERE email = ? AND password = ?`;
@@ -61,17 +110,7 @@ app.post('/login-trabalhador', (req, res) => {
   });
 });
 
-// ====== ROTAS DE LOCALIZAÇÃO ======
-
-// Cria a tabela de localização (se não existir)
-db.run(`CREATE TABLE IF NOT EXISTS location (
-  id INTEGER PRIMARY KEY,
-  lat REAL,
-  lng REAL,
-  type TEXT UNIQUE
-)`);
-
-// Atualiza localização de cliente ou mecânico
+// Rota: Atualizar localização
 app.post('/location-update', (req, res) => {
   const { type, lat, lng } = req.body;
   db.run(`
@@ -84,7 +123,7 @@ app.post('/location-update', (req, res) => {
   });
 });
 
-// Retorna a localização de ambos
+// Rota: Obter localizações
 app.get('/location-get', (req, res) => {
   db.all(`SELECT type, lat, lng FROM location`, (err, rows) => {
     if (err) return res.status(500).send({ erro: err.message });
@@ -92,11 +131,12 @@ app.get('/location-get', (req, res) => {
   });
 });
 
-// Página inicial
+// Página principal
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'pages', 'index.html'));
 });
 
+// Inicialização do servidor
 app.listen(3000, () => {
   console.log('Rodando na porta 3000...');
 });
