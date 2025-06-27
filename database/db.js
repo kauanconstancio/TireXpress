@@ -24,7 +24,7 @@ db.serialize(() => {
     )
   `);
 
-  // Tabela de trabalhadores com campos adicionais
+  // Tabela de trabalhadores
   db.run(`
     CREATE TABLE IF NOT EXISTS workers (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -39,6 +39,20 @@ db.serialize(() => {
       password TEXT NOT NULL,
       borracheiro INTEGER DEFAULT 0,
       reboque INTEGER DEFAULT 0
+    )
+  `);
+
+  // Tabela de solicitações
+  db.run(`
+    CREATE TABLE IF NOT EXISTS requests (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      customer_id INTEGER,
+      service_type TEXT NOT NULL,
+      vehicle_type TEXT NOT NULL,
+      description TEXT,
+      status TEXT DEFAULT 'pendente',
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (customer_id) REFERENCES customers(id)
     )
   `);
 });
