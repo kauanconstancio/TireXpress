@@ -1,11 +1,19 @@
 @import 'global.css';
 
+body.dark-mode{
+    --background-color-light: #282828;
+    --text-color-light: #E0E0E0;
+    --border-color-light: #fff;
+    --white: #E0E0E0;
+}
+
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 70px;
+    background-color: var(--background-color-light);
 }
 
 body .topbar {
@@ -42,11 +50,18 @@ body .servicesInput{
     gap: 5px;
 }
 
+body .servicesInput p{
+    color: var(--text-color-light);
+}
+
 body .servicesInput select{
     max-width: 500px;
     width: 100%;
     padding: 10px;
     border-radius: var(--radius);
+    background-color: var(--background-color-light);
+    border: 1px solid var(--border-color-light);
+    color: var(--text-color-light);
 }
 
 body .veicleInputs{
@@ -58,11 +73,18 @@ body .veicleInputs{
     gap: 5px;
 }
 
+body .veicleInputs p{
+    color: var(--text-color-light);
+}
+
 body .veicleInputs select{
     max-width: 500px;
     width: 100%;
     padding: 10px;
     border-radius: var(--radius);
+    background-color: var(--background-color-light);
+    border: 1px solid var(--border-color-light);
+    color: var(--text-color-light);
 }
 
 
@@ -72,6 +94,10 @@ body .textarea{
     gap: 5px;
 }
 
+body .textarea p{
+    color: var(--text-color-light);
+}
+
 body .textarea textarea{
     max-width: 500px;
     width: 100%;
@@ -79,6 +105,9 @@ body .textarea textarea{
     padding: 10px;
     resize: none;
     border-radius: var(--radius);
+    background-color: var(--background-color-light);
+    border: 1px solid var(--border-color-light);
+    color: var(--text-color-light);
 }
 
 body #requestService{

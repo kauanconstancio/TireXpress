@@ -1,11 +1,19 @@
 @import 'global.css';
 
+body.dark-mode{
+    --background-color-light: #282828;
+    --text-color-light: #E0E0E0;
+    --border-color-light: #fff;
+    --white: #E0E0E0;
+}
+
 body{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 70px;
+    background-color: var(--background-color-light);
 }
 
 body .topbar{
@@ -41,11 +49,13 @@ body .balance{
 
 body .balance h2{
     font-size: 30px;
+    color: var(--text-color-light);
 }
 
 body .balance p{
     font-weight: 400;
     font-size: 20px;
+    color: var(--text-color-light);
 }
 
 body .balance #balance{
@@ -58,7 +68,7 @@ body .line {
     max-width: 500px;
     width: 100%;
     height: 1px;
-    background-color: var(--black);
+    background-color: var(--text-color-light);
 }
 
 body .paymentMethods{
@@ -70,13 +80,18 @@ body .paymentMethods{
     margin-top: -40px;
 }
 
+body .paymentMethods p{
+    color: var(--text-color-light);
+}
+
+
 body .paymentMethods a{
     display: flex;
     align-items: center;
     padding: 5px 14px;
-    border: 1px solid var(--black);
+    border: 1px solid var(--border-color-light);
     border-radius: var(--radius);
-    color: var(--black);
+    color: var(--text-color-light);
     gap: 15px;
 }
 

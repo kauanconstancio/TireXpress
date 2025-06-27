@@ -1,11 +1,19 @@
 @import './global.css';
 
+body.dark-mode{
+    --background-color-light: #282828;
+    --text-color-light: #E0E0E0;
+    --border-color-light: #fff;
+    --white: #E0E0E0;
+}
+
 body {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 80px;
+  background-color: var(--background-color-light);
 }
 
 body img {
@@ -24,8 +32,13 @@ body .texts h3{
     color: var(--primary-color);
 }
 
+body .texts p{
+  color: var(--text-color-light);
+}
+
 body #workersEmail{
     font-weight: 500;
+    color: var(--text-color-light);
 }
 
 body a{

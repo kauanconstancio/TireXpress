@@ -1,11 +1,19 @@
 @import 'global.css';
 
+body.dark-mode{
+    --background-color-light: #282828;
+    --text-color-light: #fff;
+    --border-color-light: #fff;
+    --white: #E0E0E0;
+}
+
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 70px;
+    background-color: var(--background-color-light);
 }
 
 body .topbar {
@@ -36,6 +44,7 @@ body h3{
     font-size: 23px;
     text-align: center;
     font-weight: 500;
+    color: var(--text-color-light);
 }
 
 body select{
@@ -43,6 +52,9 @@ body select{
     width: 100%;
     padding: 10px;
     border-radius: var(--radius);
+    color: var(--text-color-light);
+    border: 1px solid var(--border-color-light);
+    background-color: var(--background-color-light);
 }
 
 body textarea{
@@ -53,6 +65,9 @@ body textarea{
     padding: 10px;
     resize: none;
     border-radius: var(--radius);
+    background-color: var(--background-color-light);
+    border: 1px solid var(--border-color-light);
+    color: var(--text-color-light);
 }
 
 body button{
