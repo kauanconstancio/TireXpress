@@ -1,79 +1,14 @@
+// index.js
 const express = require('express');
 const app = express();
 const path = require('path');
-const sqlite3 = require('sqlite3').verbose();
+const db = require('./database/db'); // importa o banco já criado corretamente
 
-// Caminho do banco
-const dbPath = path.join(__dirname, 'tirexpress.db');
-const db = new sqlite3.Database(dbPath, (err) => {
-  if (err) return console.error(err.message);
-  console.log('Conectado ao banco de dados SQLite.');
-});
-
-// Criar tabelas
-db.serialize(() => {
-  // Tabela de clientes
-  db.run(`
-    CREATE TABLE IF NOT EXISTS customers (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      email TEXT UNIQUE NOT NULL,
-      cpf TEXT NOT NULL,
-      phone TEXT NOT NULL,
-      password TEXT NOT NULL
-    )
-  `);
-
-  // Tabela de trabalhadores
-  db.run(`
-    CREATE TABLE IF NOT EXISTS workers (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      email TEXT UNIQUE NOT NULL,
-      cpf TEXT,
-      phone TEXT NOT NULL,
-      cnpj TEXT,
-      endereco TEXT,
-      numero TEXT,
-      referencia TEXT,
-      password TEXT NOT NULL,
-      borracheiro INTEGER DEFAULT 0,
-      reboque INTEGER DEFAULT 0
-    )
-  `);
-
-  // Tabela de localização
-  db.run(`
-    CREATE TABLE IF NOT EXISTS location (
-      id INTEGER PRIMARY KEY,
-      lat REAL,
-      lng REAL,
-      type TEXT UNIQUE
-    )
-  `);
-
-  // Tabela de solicitações
-  db.run(`
-    CREATE TABLE IF NOT EXISTS requests (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      customer_id INTEGER,
-      service_type TEXT NOT NULL,
-      vehicle_type TEXT NOT NULL,
-      description TEXT,
-      status TEXT DEFAULT 'pendente',
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (customer_id) REFERENCES customers(id)
-    )
-  `);
-});
-
-// Middlewares
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ROTAS
 
-// Cadastro: Cliente
 app.post('/cadastro', (req, res) => {
   const { name, email, cpf, phone, password } = req.body;
   if (!name || !email || !cpf || !phone || !password) {
@@ -87,7 +22,6 @@ app.post('/cadastro', (req, res) => {
   });
 });
 
-// Cadastro: Trabalhador
 app.post('/cadastro-trabalhador', (req, res) => {
   const {
     name, email, cpf, phone, cnpj, endereco,
@@ -110,7 +44,6 @@ app.post('/cadastro-trabalhador', (req, res) => {
   });
 });
 
-// Login: Cliente
 app.post('/login-cliente', (req, res) => {
   const { email, password } = req.body;
   const query = `SELECT * FROM customers WHERE email = ? AND password = ?`;
@@ -122,7 +55,6 @@ app.post('/login-cliente', (req, res) => {
   });
 });
 
-// Login: Trabalhador
 app.post('/login-trabalhador', (req, res) => {
   const { email, password } = req.body;
   const query = `SELECT * FROM workers WHERE email = ? AND password = ?`;
@@ -134,7 +66,6 @@ app.post('/login-trabalhador', (req, res) => {
   });
 });
 
-// Localização: Atualizar
 app.post('/location-update', (req, res) => {
   const { type, lat, lng } = req.body;
   if (!type || !lat || !lng) {
@@ -151,7 +82,6 @@ app.post('/location-update', (req, res) => {
   });
 });
 
-// Localização: Buscar todos
 app.get('/location-get', (req, res) => {
   db.all(`SELECT type, lat, lng FROM location`, (err, rows) => {
     if (err) return res.status(500).send({ erro: err.message });
@@ -159,7 +89,6 @@ app.get('/location-get', (req, res) => {
   });
 });
 
-// Solicitação: Criar
 app.post('/solicitar-servico', (req, res) => {
   const { customer_id, service_type, vehicle_type, description } = req.body;
   if (!customer_id || !service_type || !vehicle_type) {
@@ -177,12 +106,10 @@ app.post('/solicitar-servico', (req, res) => {
   });
 });
 
-// Página principal
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'pages', 'index.html'));
 });
 
-// Inicializar servidor
 app.listen(3000, () => {
   console.log('Rodando na porta 3000...');
 });

@@ -1,3 +1,4 @@
+// db.js
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
@@ -12,7 +13,6 @@ const db = new sqlite3.Database(dbPath, (err) => {
 
 // Criar tabelas
 db.serialize(() => {
-  // Tabela de clientes
   db.run(`
     CREATE TABLE IF NOT EXISTS customers (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -24,7 +24,6 @@ db.serialize(() => {
     )
   `);
 
-  // Tabela de trabalhadores
   db.run(`
     CREATE TABLE IF NOT EXISTS workers (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -42,7 +41,15 @@ db.serialize(() => {
     )
   `);
 
-  // Tabela de solicitações
+  db.run(`
+    CREATE TABLE IF NOT EXISTS location (
+      id INTEGER PRIMARY KEY,
+      lat REAL,
+      lng REAL,
+      type TEXT UNIQUE
+    )
+  `);
+
   db.run(`
     CREATE TABLE IF NOT EXISTS requests (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
