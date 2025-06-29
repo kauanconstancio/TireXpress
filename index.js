@@ -1,14 +1,15 @@
-// index.js
 const express = require('express');
 const app = express();
 const path = require('path');
-const db = require('./database/db'); // importa o banco já criado corretamente
+const db = require('./database/db'); // Caminho corrigido!
 
+// Middlewares
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ROTAS
 
+// Cadastro: Cliente
 app.post('/cadastro', (req, res) => {
   const { name, email, cpf, phone, password } = req.body;
   if (!name || !email || !cpf || !phone || !password) {
@@ -22,6 +23,7 @@ app.post('/cadastro', (req, res) => {
   });
 });
 
+// Cadastro: Trabalhador
 app.post('/cadastro-trabalhador', (req, res) => {
   const {
     name, email, cpf, phone, cnpj, endereco,
@@ -44,6 +46,7 @@ app.post('/cadastro-trabalhador', (req, res) => {
   });
 });
 
+// Login: Cliente
 app.post('/login-cliente', (req, res) => {
   const { email, password } = req.body;
   const query = `SELECT * FROM customers WHERE email = ? AND password = ?`;
@@ -55,6 +58,7 @@ app.post('/login-cliente', (req, res) => {
   });
 });
 
+// Login: Trabalhador
 app.post('/login-trabalhador', (req, res) => {
   const { email, password } = req.body;
   const query = `SELECT * FROM workers WHERE email = ? AND password = ?`;
@@ -66,6 +70,7 @@ app.post('/login-trabalhador', (req, res) => {
   });
 });
 
+// Localização: Atualizar
 app.post('/location-update', (req, res) => {
   const { type, lat, lng } = req.body;
   if (!type || !lat || !lng) {
@@ -82,6 +87,7 @@ app.post('/location-update', (req, res) => {
   });
 });
 
+// Localização: Buscar todos
 app.get('/location-get', (req, res) => {
   db.all(`SELECT type, lat, lng FROM location`, (err, rows) => {
     if (err) return res.status(500).send({ erro: err.message });
@@ -89,6 +95,7 @@ app.get('/location-get', (req, res) => {
   });
 });
 
+// Solicitação: Criar
 app.post('/solicitar-servico', (req, res) => {
   const { customer_id, service_type, vehicle_type, description } = req.body;
   if (!customer_id || !service_type || !vehicle_type) {
@@ -106,10 +113,12 @@ app.post('/solicitar-servico', (req, res) => {
   });
 });
 
+// Página principal
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'pages', 'index.html'));
 });
 
+// Inicializar servidor
 app.listen(3000, () => {
   console.log('Rodando na porta 3000...');
 });
