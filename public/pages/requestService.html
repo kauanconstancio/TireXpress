@@ -41,43 +41,40 @@
 
   <script src="../JS/customersThemeSwitcher.JS"></script>
   <script>
-    document.getElementById("requestService").addEventListener("click", async () => {
-      const serviceType = document.getElementById("serviceType").value;
-      const vehicleType = document.getElementById("veicleType").value;
-      const description = document.getElementById("descricao").value;
+   document.getElementById("requestService").addEventListener("click", async () => {
+            const serviceType = document.getElementById("serviceType").value;
+            const vehicleType = document.getElementById("veicleType").value;
+            const description = document.getElementById("descricao").value;
 
-      const customer_id = localStorage.getItem("customer_id");
-      if (!customer_id) {
-        alert("Erro: cliente não está logado.");
-        return;
-      }
+            // Pegue o ID real do cliente logado — exemplo: localStorage.getItem("customer_id")
+            const customer_id = 1; // Substitua pelo valor real
 
-      const data = {
-        customer_id,
-        service_type: serviceType,
-        vehicle_type: vehicleType,
-        description
-      };
+            const data = {
+                customer_id,
+                service_type: serviceType,
+                vehicle_type: vehicleType,
+                description
+            };
 
-      try {
-        const res = await fetch("/solicitar-servico", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
+            try {
+                const res = await fetch("/solicitar-servico", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await res.json();
+                if (res.ok) {
+                    alert("Solicitação enviada com sucesso! ID: " + result.id);
+                    window.location.href = "/pages/customerMain.html";
+                } else {
+                    alert("Erro ao enviar solicitação: " + result.erro);
+                }
+            } catch (err) {
+                alert("Erro ao conectar com o servidor.");
+                console.error(err);
+            }
         });
-
-        const result = await res.json();
-        if (res.ok) {
-          alert("Solicitação enviada com sucesso! ID: " + result.id);
-          window.location.href = "/pages/customerMain.html";
-        } else {
-          alert("Erro ao enviar solicitação: " + result.erro);
-        }
-      } catch (err) {
-        alert("Erro ao conectar com o servidor.");
-        console.error(err);
-      }
-    });
   </script>
 </body>
 </html>
