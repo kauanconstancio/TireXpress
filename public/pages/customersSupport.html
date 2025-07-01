@@ -2,14 +2,17 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Suporte</title>
-    <link rel="stylesheet" href="../cssStyles/customersSupport.css">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../cssStyles/customersSupport.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 </head>
 
 <body>
@@ -17,20 +20,65 @@
         <a href="customersPerfil.html"><i class="fa-solid fa-arrow-left"></i></a>
         <p>Ajuda</p>
     </div>
+
     <h3>Selecione o tipo de ajuda que precisa</h3>
     <select id="supportType">
         <option value="pagamento">Pagamentos</option>
         <option value="conta">Conta</option>
         <option value="problemas">Problemas</option>
     </select>
-    <textarea name="" id="" placeholder="Escreva mais informações sobre a sua solicitação de suporte"></textarea>
-    <button>ENVIAR SOLICITAÇÃO</button>
 
+    <textarea
+      id="description"
+      placeholder="Escreva mais informações sobre a sua solicitação de suporte"
+    ></textarea>
 
-
-
+    <button id="sendSupportRequest">ENVIAR SOLICITAÇÃO</button>
 
     <script src="../JS/customersThemeSwitcher.JS"></script>
+
+    <script>
+      const button = document.getElementById('sendSupportRequest');
+      const supportType = document.getElementById('supportType');
+      const description = document.getElementById('description');
+
+      button.addEventListener('click', async () => {
+        const support_type = supportType.value;
+        const desc = description.value;
+
+        // TODO: Ajuste aqui para obter o customer_id do jeito que preferir:
+        // Exemplo: pegar de cookie, sessão, variável global, etc.
+        // Por enquanto, está vazio para não usar localStorage
+        const customer_id = null; // <== Substitua aqui!
+
+        if (!customer_id) {
+          alert('Erro: usuário não autenticado.');
+          return;
+        }
+
+        const data = { customer_id, support_type, description: desc };
+
+        try {
+          const res = await fetch('/support-request', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          });
+
+          const json = await res.json();
+
+          if (res.ok) {
+            alert('Solicitação enviada com sucesso! ID: ' + json.id);
+            description.value = '';
+          } else {
+            alert('Erro: ' + json.erro);
+          }
+        } catch (err) {
+          alert('Erro ao enviar solicitação.');
+          console.error(err);
+        }
+      });
+    </script>
 </body>
 
 </html>

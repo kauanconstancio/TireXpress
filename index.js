@@ -113,6 +113,64 @@ app.post('/solicitar-servico', (req, res) => {
   });
 });
 
+// Solicitação: Listar pendentes
+app.get('/solicitacoes-pendentes', (req, res) => {
+  db.all(`SELECT * FROM requests WHERE status = 'pendente'`, (err, rows) => {
+    if (err) return res.status(500).send({ erro: err.message });
+    res.status(200).json(rows);
+  });
+});
+
+// Solicitação: Aceitar
+app.post('/aceitar-solicitacao', (req, res) => {
+  const { request_id } = req.body;
+
+  db.run(`
+    UPDATE requests SET status = 'aceito' WHERE id = ?
+  `, [request_id], function (err) {
+    if (err) return res.status(500).send({ erro: err.message });
+    if (this.changes === 0) return res.status(404).send({ erro: 'Solicitação não encontrada' });
+
+    res.status(200).send({ mensagem: 'Solicitação aceita com sucesso' });
+  });
+});
+
+// Solicitação: Status do cliente
+app.get('/status-solicitacao/:customer_id', (req, res) => {
+  const { customer_id } = req.params;
+
+  db.get(`
+    SELECT status FROM requests
+    WHERE customer_id = ?
+    ORDER BY created_at DESC
+    LIMIT 1
+  `, [customer_id], (err, row) => {
+    if (err) return res.status(500).send({ erro: err.message });
+    if (!row) return res.status(404).send({ erro: 'Nenhuma solicitação encontrada' });
+
+    res.status(200).json({ status: row.status });
+  });
+});
+
+//Solicitação de suporte
+app.post('/support-request', (req, res) => {
+  const { customer_id, support_type, description } = req.body;
+
+  if (!customer_id || !support_type) {
+    return res.status(400).json({ erro: 'Dados incompletos' });
+  }
+
+  const query = `INSERT INTO support_requests (customer_id, support_type, description) VALUES (?, ?, ?)`;
+  db.run(query, [customer_id, support_type, description], function(err) {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ erro: 'Erro no banco de dados' });
+    }
+    res.status(201).json({ id: this.lastID, message: 'Solicitação enviada com sucesso' });
+  });
+});
+
+
 // Página principal
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'pages', 'index.html'));

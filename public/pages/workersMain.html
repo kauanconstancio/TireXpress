@@ -9,6 +9,32 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+    .solicitacoes-container {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      width: 300px;
+      max-height: 400px;
+      overflow-y: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      z-index: 999;
+    }
+    .solicitacoes-container p {
+      margin: 5px 0;
+    }
+    .solicitacoes-container button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>  
   <div id="map"></div>
@@ -22,70 +48,100 @@
     <a href="workersWallet.html"><i class="fa-solid fa-wallet"></i></a>
     <a href="workersPerfil.html"><i class="fa-solid fa-user"></i></a>
   </div>
+  <!-- Div para exibir solicitações -->
+  <div id="solicitacoes" class="solicitacoes-container"></div>
 
   <!-- LEAFLET -->
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script>
-  // Inicializa o mapa centralizado em Vitória - ES
-  let map = L.map('map').setView([-20.1715, -40.2519], 15);
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    let map = L.map('map').setView([-20.1715, -40.2519], 15);
+    let clienteMarker = null;
+    let mecanicoMarker = null;
 
-  let clienteMarker = null;
-  let mecanicoMarker = null;
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
 
-  // Adiciona o mapa base do OpenStreetMap
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(map);
+    navigator.geolocation.watchPosition((pos) => {
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
 
-  // Obtem a localização do cliente em tempo real e atualiza no mapa
-  navigator.geolocation.watchPosition((pos) => {
-    const lat = pos.coords.latitude;
-    const lng = pos.coords.longitude;
+      if (!mecanicoMarker) {
+        mecanicoMarker = L.circleMarker([lat, lng], {
+          radius: 10,
+          color: '#FF4500',
+          fillColor: '#FF6347',
+          fillOpacity: 0.8,
+          weight: 2
+        }).addTo(map).bindTooltip("Você", { permanent: false, direction: "top" });
+      } else {
+        mecanicoMarker.setLatLng([lat, lng]);
+      }
 
-    // Cria marcador como bolinha azul caso ainda não exista
-    if (!clienteMarker) {
-      clienteMarker = L.circleMarker([lat, lng], {
-        radius: 10,
-        color: '#000',       // borda azul
-        fillColor: '#9C0D11',   // preenchimento azul
-        fillOpacity: 0.8,
-        weight: 2
-      }).addTo(map).bindTooltip("Você", { permanent: false, direction: "top" });
-    } else {
-      // Atualiza a posição da bolinha
-      clienteMarker.setLatLng([lat, lng]);
+      fetch('/location-update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'mecanico', lat, lng })
+      });
+    });
+
+    setInterval(() => {
+      fetch('/location-get')
+        .then(res => res.json())
+        .then(data => {
+          const cliente = data.find(p => p.type === 'cliente');
+          if (cliente) {
+            if (!clienteMarker) {
+              clienteMarker = L.circleMarker([cliente.lat, cliente.lng], {
+                radius: 10,
+                color: '#000',
+                fillColor: '#9C0D11',
+                fillOpacity: 0.8,
+                weight: 2
+              }).addTo(map).bindTooltip("Cliente", { permanent: false, direction: "top" });
+            } else {
+              clienteMarker.setLatLng([cliente.lat, cliente.lng]);
+            }
+          }
+        });
+    }, 5000);
+
+    async function carregarSolicitacoes() {
+      const res = await fetch('/solicitacoes-pendentes');
+      const solicitacoes = await res.json();
+      const container = document.getElementById("solicitacoes");
+      container.innerHTML = "";
+
+      solicitacoes.forEach(s => {
+        const div = document.createElement("div");
+        div.innerHTML = `
+          <p><strong>Serviço:</strong> ${s.service_type}</p>
+          <p><strong>Veículo:</strong> ${s.vehicle_type}</p>
+          <p><strong>Descrição:</strong> ${s.description}</p>
+          <button onclick="aceitar(${s.id})">Aceitar</button>
+          <hr>
+        `;
+        container.appendChild(div);
+      });
     }
 
-    // Envia a localização atualizada para o backend
-    fetch('/location-update', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type: 'cliente', lat, lng })
-    });
-  });
-
-  // Atualiza a posição do mecânico a cada 5 segundos
-  setInterval(() => {
-    fetch('/location-get')
-      .then(res => res.json())
-      .then(data => {
-        const mecanico = data.find(p => p.type === 'mecanico');
-
-        if (mecanico) {
-          // Cria marcador como bolinha laranja se ainda não existir
-          if (!mecanicoMarker) {
-            mecanicoMarker = L.circleMarker([mecanico.lat, mecanico.lng], {
-              radius: 10,
-              color: '#FF4500',       // borda laranja escura
-              fillColor: '#FF6347',   // preenchimento laranja claro
-              fillOpacity: 0.8,
-              weight: 2
-            }).addTo(map).bindTooltip("Mecânico", { permanent: false, direction: "top" });
-          } else {
-            // Atualiza a posição do mecânico no mapa
-            mecanicoMarker.setLatLng([mecanico.lat, mecanico.lng]);
-          }
-        }
+    async function aceitar(requestId) {
+      const res = await fetch('/aceitar-solicitacao', {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ request_id: requestId })
       });
-  }, 5000);
-</script>
+
+      const data = await res.json();
+      if (res.ok) {
+        alert(data.mensagem);
+        carregarSolicitacoes();
+      } else {
+        alert(data.erro);
+      }
+    }
+
+    carregarSolicitacoes();
+  </script>
+ </body>
+</html> 

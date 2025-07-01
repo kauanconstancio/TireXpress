@@ -67,6 +67,19 @@ db.serialize(() => {
       type TEXT UNIQUE
     )
   `);
+
+  //Tabela de suporte
+  db.run(`
+  CREATE TABLE IF NOT EXISTS support_requests (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    customer_id INTEGER,
+    support_type TEXT NOT NULL,
+    description TEXT,
+    status TEXT DEFAULT 'pendente',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
+  )
+`);
 });
 
 module.exports = db;
