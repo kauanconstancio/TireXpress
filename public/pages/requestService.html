@@ -6,7 +6,6 @@
   <title>Solicitar serviço</title>
   <link rel="stylesheet" href="../cssStyles/requestService.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -41,40 +40,42 @@
 
   <script src="../JS/customersThemeSwitcher.JS"></script>
   <script>
-   document.getElementById("requestService").addEventListener("click", async () => {
-            const serviceType = document.getElementById("serviceType").value;
-            const vehicleType = document.getElementById("veicleType").value;
-            const description = document.getElementById("descricao").value;
+    document.getElementById("requestService").addEventListener("click", async () => {
+      const serviceType = document.getElementById("serviceType").value;
+      const vehicleType = document.getElementById("veicleType").value;
+      const description = document.getElementById("descricao").value;
 
-            // Pegue o ID real do cliente logado — exemplo: localStorage.getItem("customer_id")
-            const customer_id = 1; // Substitua pelo valor real
+      // Exemplo: recuperar ID do cliente se você salvar no localStorage
+      const customer_id = 1; // Substitua pelo real localStorage.getItem('customer_id')
 
-            const data = {
-                customer_id,
-                service_type: serviceType,
-                vehicle_type: vehicleType,
-                description
-            };
+      const data = {
+        customer_id,
+        service_type: serviceType,
+        vehicle_type: vehicleType,
+        description
+      };
 
-            try {
-                const res = await fetch("/solicitar-servico", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data)
-                });
-
-                const result = await res.json();
-                if (res.ok) {
-                    alert("Solicitação enviada com sucesso! ID: " + result.id);
-                    window.location.href = "/pages/customerMain.html";
-                } else {
-                    alert("Erro ao enviar solicitação: " + result.erro);
-                }
-            } catch (err) {
-                alert("Erro ao conectar com o servidor.");
-                console.error(err);
-            }
+      try {
+        const res = await fetch("/solicitar-servico", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
         });
+
+        const result = await res.json();
+        if (res.ok) {
+          // Salva o ID da solicitação no localStorage para monitorar depois
+          localStorage.setItem("request_id", result.id);
+          alert("Solicitação enviada com sucesso!");
+          window.location.href = "/pages/customerMain.html";
+        } else {
+          alert("Erro ao enviar solicitação: " + result.erro);
+        }
+      } catch (err) {
+        alert("Erro ao conectar com o servidor.");
+        console.error(err);
+      }
+    });
   </script>
 </body>
 </html>

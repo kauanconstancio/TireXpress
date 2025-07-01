@@ -40,7 +40,7 @@
   <div id="map"></div>
 
   <div class="conect">
-    <button class="searchButton">Conectar</button>
+    <button class="searchButton" id="btnConectar">Conectar</button>
   </div>
 
   <div class="footerMenu">
@@ -141,7 +141,10 @@
       }
     }
 
-    carregarSolicitacoes();
+    // Aqui adicionamos o listener para o botão "Conectar"
+    document.getElementById("btnConectar").addEventListener("click", () => {
+      carregarSolicitacoes();
+    });
   </script>
  </body>
-</html> 
+</html>

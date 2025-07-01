@@ -7,13 +7,37 @@
 
   <link rel="stylesheet" href="../cssStyles/customersMain.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    .pedido-aceito-container {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 320px;
+      max-height: 300px;
+      overflow-y: auto;
+      padding: 15px;
+      z-index: 1000;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+    .pedido-aceito-container h3 {
+      margin-top: 0;
+      color: #28a745;
+      text-align: center;
+    }
+    .pedido-aceito-container p {
+      margin: 6px 0;
+    }
+  </style>
 </head>
 <body>  
   <div id="map"></div>
 
-    <a class="searchButton" href="requestService.html">Solicitar Serviço</a>
+  <a class="searchButton" href="requestService.html">Solicitar Serviço</a>
 
   <div class="footerMenu">
     <a href="#"><i class="fa-solid fa-house"></i></a>
@@ -21,41 +45,36 @@
     <a href="customersPerfil.html"><i class="fa-solid fa-user"></i></a>
   </div>
 
-  <!-- LEAFLET -->
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="../JS/customersThemeSwitcher.JS"></script>
-<script>
-  // Inicializa o mapa centralizado em Vitória - ES
-  let map = L.map('map').setView([-20.1715, -40.2519], 15);
+  <div id="pedidoAceito" class="pedido-aceito-container"></div>
 
+  <!-- LEAFLET -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="../JS/customersThemeSwitcher.JS"></script>
+  <script>
+      const map = L.map('map').setView([-20.1715, -40.2519], 15);
   let clienteMarker = null;
   let mecanicoMarker = null;
 
-  // Adiciona o mapa base do OpenStreetMap
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map);
 
-  // Obtem a localização do cliente em tempo real e atualiza no mapa
   navigator.geolocation.watchPosition((pos) => {
     const lat = pos.coords.latitude;
     const lng = pos.coords.longitude;
 
-    // Cria marcador como bolinha azul caso ainda não exista
     if (!clienteMarker) {
       clienteMarker = L.circleMarker([lat, lng], {
         radius: 10,
-        color: '#000',       // borda azul
-        fillColor: '#9C0D11',   // preenchimento azul
+        color: '#000',
+        fillColor: '#9C0D11',
         fillOpacity: 0.8,
         weight: 2
       }).addTo(map).bindTooltip("Você", { permanent: false, direction: "top" });
     } else {
-      // Atualiza a posição da bolinha
       clienteMarker.setLatLng([lat, lng]);
     }
 
-    // Envia a localização atualizada para o backend
     fetch('/location-update', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -63,30 +82,68 @@
     });
   });
 
-  // Atualiza a posição do mecânico a cada 5 segundos
   setInterval(() => {
     fetch('/location-get')
       .then(res => res.json())
       .then(data => {
         const mecanico = data.find(p => p.type === 'mecanico');
-
         if (mecanico) {
-          // Cria marcador como bolinha laranja se ainda não existir
           if (!mecanicoMarker) {
             mecanicoMarker = L.circleMarker([mecanico.lat, mecanico.lng], {
               radius: 10,
-              color: '#FF4500',       // borda laranja escura
-              fillColor: '#FF6347',   // preenchimento laranja claro
+              color: '#FF4500',
+              fillColor: '#FF6347',
               fillOpacity: 0.8,
               weight: 2
             }).addTo(map).bindTooltip("Mecânico", { permanent: false, direction: "top" });
           } else {
-            // Atualiza a posição do mecânico no mapa
             mecanicoMarker.setLatLng([mecanico.lat, mecanico.lng]);
           }
         }
       });
   }, 5000);
- </script>
+
+  // === STATUS DO PEDIDO ===
+
+  const requestId = localStorage.getItem("request_id");
+  let pedidoAceitoMostrado = false;
+
+  async function checarStatusPedido() {
+    if (!requestId) return;
+
+    try {
+      const res = await fetch(`/status-solicitacao/${requestId}`);
+      if (!res.ok) throw new Error('Erro ao buscar status');
+
+      const data = await res.json();
+
+      if (data.status === 'aceito') {
+        if (!pedidoAceitoMostrado) {
+          pedidoAceitoMostrado = true;
+          alert('Seu pedido foi aceito! O borracheiro está a caminho.');
+          localStorage.removeItem("request_id");
+        }
+
+        const container = document.getElementById('pedidoAceito');
+        container.style.display = 'block';
+        container.innerHTML = `
+          <h3>Pedido Aceito</h3>
+          <p><strong>Serviço:</strong> ${data.service_type || 'N/A'}</p>
+          <p><strong>Veículo:</strong> ${data.vehicle_type || 'N/A'}</p>
+          <p><strong>Descrição:</strong> ${data.description || 'Sem descrição'}</p>
+          <p><strong>Status:</strong> ${data.status}</p>
+        `;
+      } else {
+        document.getElementById('pedidoAceito').style.display = 'none';
+      }
+
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  setInterval(checarStatusPedido, 3000);
+  checarStatusPedido();
+  </script>
 </body>
 </html>
