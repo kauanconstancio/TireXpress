@@ -12,6 +12,7 @@
     <h2>Finalizar Serviço</h2>
 
     <label for="descricao">Descrição do serviço realizado:</label>
+    
     <textarea id="descricao" placeholder="Ex: Troca de pneu dianteiro e calibração completa."></textarea>
 
     <label for="valor">Valor (R$):</label>
@@ -25,7 +26,7 @@
       const descricao = document.getElementById("descricao").value;
       const valor = parseFloat(document.getElementById("valor").value);
 
-      const request_id = localStorage.getItem("request_id"); // ou outro meio de pegar a solicitação atual
+      const request_id = 1;
 
       if (!descricao || !valor || !request_id) {
         alert("Preencha todos os campos corretamente.");

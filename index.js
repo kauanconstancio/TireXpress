@@ -159,7 +159,7 @@ INNER JOIN
 
   `, [], (err, row) => {
 
-    console.log(row);
+
 
 
     if (err) return res.status(500).send({ erro: err.message });
@@ -192,19 +192,24 @@ app.post('/support-request', (req, res) => {
 
 // Finalizar serviço (borracheiro informa descrição e valor, cliente depois confirma)
 app.post('/finalizar-servico', (req, res) => {
-  const { request_id, descricao_servico, valor } = req.body;
+  const { request_id, descricao, valor } = req.body;
 
-  if (!request_id || !descricao_servico || valor == null) {
+console.log(request_id);
+console.log(descricao);
+console.log(valor);
+
+
+  if (!request_id || !descricao || valor == null) {
     return res.status(400).json({ erro: 'Campos request_id, descricao_servico e valor são obrigatórios' });
   }
 
   const query = `
     UPDATE requests 
-    SET status = 'finalizado', service_done = ?, price = ?
+    SET status = 'finalizado', Descricao_b = ?, valor_b = ?
     WHERE id = ?
   `;
 
-  db.run(query, [descricao_servico, valor, request_id], function(err) {
+  db.run(query, [descricao, valor, request_id], function(err) {
     if (err) {
       return res.status(500).json({ erro: 'Erro ao finalizar serviço: ' + err.message });
     }
