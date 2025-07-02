@@ -137,6 +137,7 @@
       const data = await res.json();
       if (res.ok) {
         alert(data.mensagem);
+        window.location.href = "workersFinishService.html";
         carregarSolicitacoes();
       } else {
         alert(data.erro);

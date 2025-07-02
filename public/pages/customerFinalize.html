@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Finalizar Serviço - TireXpress</title>
+  <link rel="stylesheet" href="../cssStyles/customerFinalize.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" />
+</head>
+<body>
+  <div class="container">
+    <h2>Resumo do Serviço</h2>
+    <div class="service-summary">
+      <p><strong>Serviço Realizado:</strong></p>
+      <p id="descricaoServico">Carregando...</p>
+      
+      <p><strong>Valor:</strong></p>
+      <p id="valorServico">Carregando...</p>
+    </div>
+
+    <button id="btnConfirmar">Confirmar e Pagar</button>
+  </div>
+
+  <script>
+    const requestId = localStorage.getItem('request_id');
+
+    async function carregarResumo() {
+      if (!requestId) {
+        alert('ID do pedido não encontrado.');
+        return;
+      }
+
+      try {
+        const res = await fetch(`/status-solicitacao/${requestId}`);
+        if (!res.ok) throw new Error('Erro ao buscar resumo do serviço.');
+
+        const data = await res.json();
+
+        if (data.status !== 'finalizado') {
+          alert('Serviço ainda não finalizado pelo borracheiro.');
+          return;
+        }
+
+        document.getElementById('descricaoServico').textContent = data.service_done || 'Sem descrição';
+        document.getElementById('valorServico').textContent = `R$ ${data.price.toFixed(2) || '0,00'}`;
+
+      } catch (err) {
+        alert(err.message);
+        console.error(err);
+      }
+    }
+
+    document.getElementById('btnConfirmar').addEventListener('click', async () => {
+      if (!requestId) return alert('ID do pedido não encontrado.');
+
+      try {
+        const res = await fetch('/confirmar-pagamento', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ request_id: requestId })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert('Pagamento confirmado com sucesso!');
+          localStorage.removeItem('request_id');
+          window.location.href = '/pages/customerMain.html';
+        } else {
+          alert('Erro: ' + data.erro);
+        }
+      } catch (err) {
+        alert('Erro ao confirmar pagamento.');
+        console.error(err);
+      }
+    });
+
+    carregarResumo();
+  </script>
+</body>
+</html>

@@ -190,6 +190,55 @@ app.post('/support-request', (req, res) => {
   });
 });
 
+// Finalizar serviço (borracheiro informa descrição e valor, cliente depois confirma)
+app.post('/finalizar-servico', (req, res) => {
+  const { request_id, descricao_servico, valor } = req.body;
+
+  if (!request_id || !descricao_servico || valor == null) {
+    return res.status(400).json({ erro: 'Campos request_id, descricao_servico e valor são obrigatórios' });
+  }
+
+  const query = `
+    UPDATE requests 
+    SET status = 'finalizado', service_done = ?, price = ?
+    WHERE id = ?
+  `;
+
+  db.run(query, [descricao_servico, valor, request_id], function(err) {
+    if (err) {
+      return res.status(500).json({ erro: 'Erro ao finalizar serviço: ' + err.message });
+    }
+    if (this.changes === 0) {
+      return res.status(404).json({ erro: 'Solicitação não encontrada' });
+    }
+    res.json({ mensagem: 'Serviço finalizado com sucesso' });
+  });
+});
+
+app.post('/confirmar-pagamento', (req, res) => {
+  const { request_id } = req.body;
+
+  if (!request_id) {
+    return res.status(400).json({ erro: 'Campo request_id é obrigatório' });
+  }
+
+  const query = `
+    UPDATE requests
+    SET payment_status = 'confirmado', status = 'pago'
+    WHERE id = ?
+  `;
+
+  db.run(query, [request_id], function(err) {
+    if (err) {
+      return res.status(500).json({ erro: 'Erro ao confirmar pagamento: ' + err.message });
+    }
+    if (this.changes === 0) {
+      return res.status(404).json({ erro: 'Solicitação não encontrada' });
+    }
+    res.json({ mensagem: 'Pagamento confirmado com sucesso' });
+  });
+});
+
 
 // Página principal
 app.get('/', (req, res) => {
