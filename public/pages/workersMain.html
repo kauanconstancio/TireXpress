@@ -107,6 +107,8 @@
     }, 5000);
 
     async function carregarSolicitacoes() {
+
+
       const res = await fetch('/solicitacoes-pendentes');
       const solicitacoes = await res.json();
       const container = document.getElementById("solicitacoes");

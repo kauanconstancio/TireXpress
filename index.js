@@ -113,16 +113,21 @@ app.post('/solicitar-servico', (req, res) => {
   });
 });
 
+
 // Solicitação: Listar pendentes
 app.get('/solicitacoes-pendentes', (req, res) => {
+
   db.all(`SELECT * FROM requests WHERE status = 'pendente'`, (err, rows) => {
     if (err) return res.status(500).send({ erro: err.message });
     res.status(200).json(rows);
   });
+
 });
+
 
 // Solicitação: Aceitar
 app.post('/aceitar-solicitacao', (req, res) => {
+
   const { request_id } = req.body;
 
   db.run(`
@@ -133,22 +138,37 @@ app.post('/aceitar-solicitacao', (req, res) => {
 
     res.status(200).send({ mensagem: 'Solicitação aceita com sucesso' });
   });
+
 });
+
 
 // Solicitação: Status do cliente
 app.get('/status-solicitacao/:customer_id', (req, res) => {
-  const { customer_id } = req.params;
+const customer_id = req.params.customer_id;
 
   db.get(`
-    SELECT status FROM requests
-    WHERE customer_id = ?
-    ORDER BY created_at DESC
-    LIMIT 1
-  `, [customer_id], (err, row) => {
+
+SELECT 
+  r.status,
+  w.placa,
+  w.veiculo
+FROM 
+  requests r
+INNER JOIN 
+  workers w ON r.id = w.id
+
+  `, [], (err, row) => {
+
+    console.log(row);
+
+
     if (err) return res.status(500).send({ erro: err.message });
     if (!row) return res.status(404).send({ erro: 'Nenhuma solicitação encontrada' });
 
-    res.status(200).json({ status: row.status });
+
+
+
+    res.status(200).json({ status: row.status, placa: row.placa, veiculo: row.veiculo });
   });
 });
 

@@ -105,17 +105,27 @@
 
   // === STATUS DO PEDIDO ===
 
-  const requestId = localStorage.getItem("request_id");
+
+
+  //const requestId = localStorage.getItem("customer_id");
+
+  //1 jul - Victor: Inserido requestID = 1; Bruto
+  const requestId = 1;
   let pedidoAceitoMostrado = false;
 
   async function checarStatusPedido() {
+
     if (!requestId) return;
 
     try {
+
       const res = await fetch(`/status-solicitacao/${requestId}`);
+
       if (!res.ok) throw new Error('Erro ao buscar status');
 
       const data = await res.json();
+
+      console.log(data);
 
       if (data.status === 'aceito') {
         if (!pedidoAceitoMostrado) {
@@ -128,9 +138,8 @@
         container.style.display = 'block';
         container.innerHTML = `
           <h3>Pedido Aceito</h3>
-          <p><strong>Serviço:</strong> ${data.service_type || 'N/A'}</p>
-          <p><strong>Veículo:</strong> ${data.vehicle_type || 'N/A'}</p>
-          <p><strong>Descrição:</strong> ${data.description || 'Sem descrição'}</p>
+          <p><strong>Veículo:</strong> ${data.veiculo}</p>
+          <p><strong>Placa:</strong> ${data.placa}</p>
           <p><strong>Status:</strong> ${data.status}</p>
         `;
       } else {
