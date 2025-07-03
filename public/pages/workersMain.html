@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Início - TireXpress</title>
 
   <link rel="stylesheet" href="../cssStyles/workersMain.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
     .solicitacoes-container {
       position: absolute;
       top: 10px;
@@ -20,12 +22,14 @@
       width: 300px;
       max-height: 400px;
       overflow-y: auto;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       z-index: 999;
     }
+
     .solicitacoes-container p {
       margin: 5px 0;
     }
+
     .solicitacoes-container button {
       background-color: #28a745;
       color: white;
@@ -36,7 +40,8 @@
     }
   </style>
 </head>
-<body>  
+
+<body>
   <div id="map"></div>
 
   <div class="conect">
@@ -54,18 +59,26 @@
   <!-- LEAFLET -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    let map = L.map('map').setView([-20.1715, -40.2519], 15);
+    let map = L.map('map'); // Inicializa o mapa sem setView ainda
     let clienteMarker = null;
     let mecanicoMarker = null;
 
+    // Adiciona o mapa base
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
+    // Obtém a localização do mecânico e centraliza o mapa
     navigator.geolocation.watchPosition((pos) => {
       const lat = pos.coords.latitude;
       const lng = pos.coords.longitude;
 
+      // Centraliza o mapa apenas uma vez
+      if (!map.getCenter().lat && !map.getCenter().lng) {
+        map.setView([lat, lng], 15);
+      }
+
+      // Cria ou atualiza marcador do mecânico
       if (!mecanicoMarker) {
         mecanicoMarker = L.circleMarker([lat, lng], {
           radius: 10,
@@ -78,13 +91,19 @@
         mecanicoMarker.setLatLng([lat, lng]);
       }
 
+      // Envia localização do mecânico ao servidor
       fetch('/location-update', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'mecanico', lat, lng })
       });
+    }, (err) => {
+      console.error("Erro ao acessar GPS:", err);
+      map.setView([-20.1715, -40.2519], 15); // Fallback
     });
 
+
+    // Atualiza a posição do cliente no mapa
     setInterval(() => {
       fetch('/location-get')
         .then(res => res.json())
@@ -105,6 +124,7 @@
           }
         });
     }, 5000);
+
 
     async function carregarSolicitacoes() {
 
@@ -149,5 +169,6 @@
       carregarSolicitacoes();
     });
   </script>
- </body>
+</body>
+
 </html>

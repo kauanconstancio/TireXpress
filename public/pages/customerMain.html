@@ -80,57 +80,74 @@ top: 650px;
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="../JS/customersThemeSwitcher.JS"></script>
   <script>
-      const map = L.map('map').setView([-20.1715, -40.2519], 15);
-  let clienteMarker = null;
-  let mecanicoMarker = null;
+  const map = L.map('map'); // Inicializa o mapa sem setView fixa
+let clienteMarker = null;
+let mecanicoMarker = null;
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(map);
+// Adiciona o mapa base
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
 
-  navigator.geolocation.watchPosition((pos) => {
-    const lat = pos.coords.latitude;
-    const lng = pos.coords.longitude;
+// Obtém a localização do cliente e centraliza o mapa
+navigator.geolocation.watchPosition((pos) => {
+  const lat = pos.coords.latitude;
+  const lng = pos.coords.longitude;
 
-    if (!clienteMarker) {
-      clienteMarker = L.circleMarker([lat, lng], {
-        radius: 10,
-        color: '#000',
-        fillColor: '#9C0D11',
-        fillOpacity: 0.8,
-        weight: 2
-      }).addTo(map).bindTooltip("Você", { permanent: false, direction: "top" });
-    } else {
-      clienteMarker.setLatLng([lat, lng]);
-    }
+  // Centraliza o mapa uma única vez (se necessário)
+  if (!map._initialCenterSet) {
+    map.setView([lat, lng], 15);
+    map._initialCenterSet = true;
+  }
 
-    fetch('/location-update', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type: 'cliente', lat, lng })
-    });
+  // Cria ou atualiza marcador do cliente
+  if (!clienteMarker) {
+    clienteMarker = L.circleMarker([lat, lng], {
+      radius: 10,
+      color: '#000',
+      fillColor: '#9C0D11',
+      fillOpacity: 0.8,
+      weight: 2
+    }).addTo(map).bindTooltip("Você", { permanent: false, direction: "top" });
+  } else {
+    clienteMarker.setLatLng([lat, lng]);
+  }
+
+  // Envia localização do cliente ao servidor
+  fetch('/location-update', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type: 'cliente', lat, lng })
   });
 
-  setInterval(() => {
-    fetch('/location-get')
-      .then(res => res.json())
-      .then(data => {
-        const mecanico = data.find(p => p.type === 'mecanico');
-        if (mecanico) {
-          if (!mecanicoMarker) {
-            mecanicoMarker = L.circleMarker([mecanico.lat, mecanico.lng], {
-              radius: 10,
-              color: '#FF4500',
-              fillColor: '#FF6347',
-              fillOpacity: 0.8,
-              weight: 2
-            }).addTo(map).bindTooltip("Mecânico", { permanent: false, direction: "top" });
-          } else {
-            mecanicoMarker.setLatLng([mecanico.lat, mecanico.lng]);
-          }
+}, (err) => {
+  console.error("Erro ao acessar GPS:", err.message);
+  map.setView([-20.1715, -40.2519], 15); // fallback para Vitória
+});
+
+// Atualiza a posição do mecânico no mapa
+setInterval(() => {
+  fetch('/location-get')
+    .then(res => res.json())
+    .then(data => {
+      const mecanico = data.find(p => p.type === 'mecanico');
+      if (mecanico) {
+        if (!mecanicoMarker) {
+          mecanicoMarker = L.circleMarker([mecanico.lat, mecanico.lng], {
+            radius: 10,
+            color: '#FF4500',
+            fillColor: '#FF6347',
+            fillOpacity: 0.8,
+            weight: 2
+          }).addTo(map).bindTooltip("Mecânico", { permanent: false, direction: "top" });
+        } else {
+          mecanicoMarker.setLatLng([mecanico.lat, mecanico.lng]);
         }
-      });
-  }, 5000);
+      }
+    })
+    .catch(err => console.error("Erro ao buscar localização:", err));
+}, 5000);
+
 
   // === STATUS DO PEDIDO ===
 
