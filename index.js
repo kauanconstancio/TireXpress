@@ -142,6 +142,29 @@ app.post('/aceitar-solicitacao', (req, res) => {
 });
 
 
+
+app.get("/teste", (req, res) => {
+  
+ db.get(`
+
+SELECT 
+  Descricao_b,
+  valor_b
+FROM 
+  requests 
+WHERE 
+  status_b = 'pendente'
+LIMIT 1;
+
+  `,(err, row) => {
+
+
+    res.json(row);
+  });
+
+})
+
+
 // Solicitação: Status do cliente
 app.get('/status-solicitacao/:customer_id', (req, res) => {
 const customer_id = req.params.customer_id;
@@ -205,7 +228,7 @@ console.log(valor);
 
   const query = `
     UPDATE requests 
-    SET status = 'finalizado', Descricao_b = ?, valor_b = ?
+    SET status = 'finalizado', status_b = 'pendente', Descricao_b = ?, valor_b = ?
     WHERE id = ?
   `;
 
@@ -229,7 +252,7 @@ app.post('/confirmar-pagamento', (req, res) => {
 
   const query = `
     UPDATE requests
-    SET payment_status = 'confirmado', status = 'pago'
+    SET status_b = 'pago'
     WHERE id = ?
   `;
 

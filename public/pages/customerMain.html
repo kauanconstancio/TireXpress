@@ -32,12 +32,41 @@
     .pedido-aceito-container p {
       margin: 6px 0;
     }
+
+
+    .button_{
+
+    align-items: center;
+    justify-content: center;
+    max-width: 500px;
+    width: 84%;
+    padding: 18px 14px;
+    border-radius: var(--radius);
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+
+    letter-spacing: 1px;
+    z-index: 2;
+    bottom: 95px;
+    position: relative;
+top: 650px;
+}
+
+
+    
   </style>
 </head>
 <body>  
   <div id="map"></div>
 
-  <a class="searchButton" href="requestService.html">Solicitar Serviço</a>
+
+  <a class="button_" href="requestService.html">Solicitar Serviço</a>
+  <a class="button_" href="customerFinalize.html">Confirmar Pagamento</a>
+
 
   <div class="footerMenu">
     <a href="#"><i class="fa-solid fa-house"></i></a>
