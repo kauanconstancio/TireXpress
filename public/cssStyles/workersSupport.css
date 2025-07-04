@@ -6,6 +6,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 70px;
+    background-color: var(--background-color-light);
 }
 
 body .topbar {
@@ -36,6 +37,7 @@ body h3{
     font-size: 23px;
     text-align: center;
     font-weight: 500;
+    color: var(--text-color-light);
 }
 
 body select{

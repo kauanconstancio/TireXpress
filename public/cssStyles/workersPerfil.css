@@ -6,6 +6,7 @@ body{
     align-items: center;
     justify-content: center;
     gap: 70px;
+    background-color: var(--background-color-light);
 }
 
 body .topbar{
@@ -42,12 +43,17 @@ body .user{
 body .user img{
     width: 200px;
     height: 200px;
-    border: 1px solid var(--black);
+    border: 1px solid var(--radiobutton-color-light);
     border-radius: 50%;
+}
+
+body .user h2{
+    color: var(--text-color-light);
 }
 
 body .user p{
     font-weight: 500;
+    color: var(--text-color-light);
 }
 
 body .pages{

@@ -6,6 +6,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 70px;
+    background-color: var(--background-color-light);
 }
 
 body .topbar {
@@ -47,14 +48,18 @@ h3 {
 
 h1 {
     text-align: center;
-    border-bottom: 2px solid #eee;
+    border-bottom: 2px solid var(--text-color-light);
     padding-bottom: 10px;
 }
 
 h2 {
     margin-top: 1.5em;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--text-color-light);
     padding-bottom: 5px;
+}
+
+p{
+    color: var(--text-color-light);
 }
 
 .meta-info {
@@ -71,6 +76,7 @@ ul {
 
 li {
     margin-bottom: 0.5em;
+    color: var(--text-color-light);
 }
 
 strong {
@@ -91,4 +97,8 @@ a:hover {
     padding: 15px;
     border-radius: 5px;
     border-left: 5px solid #3498db;
+}
+
+.contact-info p{
+    color: var(--background-color-light);
 }

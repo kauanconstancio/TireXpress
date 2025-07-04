@@ -6,6 +6,7 @@ body{
     align-items: center;
     justify-content: center;
     gap: 70px;
+    background-color: var(--background-color-light);
 }
 
 body .topbar{
@@ -45,6 +46,7 @@ body .informations .name p,
 .cpf p,
 .number p{
     font-weight: 400;
+    color: var(--text-color-light);
 }
 
 body .informations .name h3,
@@ -52,7 +54,8 @@ body .informations .name h3,
 .cpf h3,
 .number h3{
     font-size: 16px;
-    border: 1px solid var(--black);
+    border: 1px solid var(--border-color-light);
+    color: var(--text-color-light);
     padding: 10px;
     border-radius: var(--radius);
     font-weight: 500;

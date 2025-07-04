@@ -1,0 +1,106 @@
+@import 'global.css';
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 70px;
+    background-color: var(--background-color-light);
+}
+
+body .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 500px;
+    width: 100%;
+    padding: 24px 14px;
+    border: none;
+    border-radius: var(--radius);
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 1px;
+    gap: 20px;
+}
+
+body .topbar a {
+    color: var(--white);
+    font-size: 25px;
+    position: absolute;
+    left: 60px;
+}
+
+.themes{
+    max-width: 500px;
+    width: 100%;
+}
+
+.themes .theme-option {
+    max-width: 500px;
+    width: 100%;
+    background-color: var(--background-color-light);
+    border: 1px solid var(--border-color-light);
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.themes .theme-option:hover {
+    border-color: #888;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.themes .theme-option input[type="radio"] {
+    /* Esconde o rádio padrão */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--radiobutton-color-light);
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+/* O círculo interno quando selecionado */
+.themes .theme-option input[type="radio"]::before {
+    content: '';
+    display: block;
+    width: 14px;
+    height: 14px;
+    background-color: var(--radiobutton-color-light);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    /* Começa invisível */
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Animação do círculo interno quando selecionado */
+.themes .theme-option input[type="radio"]:checked::before {
+    transform: translate(-50%, -50%) scale(1);
+    /* Torna visível */
+}
+
+.themes .theme-option label {
+    flex-grow: 1;
+    /* Permite que o label ocupe o espaço restante */
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--text-color-light);
+    cursor: pointer;
+}
