@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Início - TireXpress</title>
 
   <link rel="stylesheet" href="../cssStyles/customersMain.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     .pedido-aceito-container {
       position: fixed;
@@ -15,56 +17,55 @@
       right: 10px;
       background: white;
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       width: 320px;
       max-height: 300px;
       overflow-y: auto;
       padding: 15px;
       z-index: 1000;
-      font-family: Arial, sans-serif;
       display: none;
     }
+
     .pedido-aceito-container h3 {
       margin-top: 0;
       color: #28a745;
       text-align: center;
     }
+
     .pedido-aceito-container p {
       margin: 6px 0;
     }
 
 
-    .button_{
+    .button_ {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      max-width: 500px;
+      width: 84%;
+      padding: 18px 14px;
+      border-radius: var(--radius);
+      background-color: var(--primary-color);
+      color: var(--white);
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
 
-    align-items: center;
-    justify-content: center;
-    max-width: 500px;
-    width: 84%;
-    padding: 18px 14px;
-    border-radius: var(--radius);
-    background-color: var(--primary-color);
-    color: var(--white);
-    font-size: 16px;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-
-    letter-spacing: 1px;
-    z-index: 2;
-    bottom: 95px;
-    position: relative;
-top: 650px;
-}
-
-
-    
+      letter-spacing: 1px;
+      z-index: 2;
+      bottom: 95px;
+      position: relative;
+      top: 650px;
+    }
   </style>
 </head>
-<body>  
+
+<body>
   <div id="map"></div>
 
 
-  <a class="button_" href="requestService.html">Solicitar Serviço</a>
+  <a class="searchButton" href="requestService.html">Solicitar Serviço</a>
   <a class="button_" href="customerFinalize.html">Confirmar Pagamento</a>
 
 
@@ -80,125 +81,126 @@ top: 650px;
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="../JS/customersThemeSwitcher.JS"></script>
   <script>
-  const map = L.map('map'); // Inicializa o mapa sem setView fixa
-let clienteMarker = null;
-let mecanicoMarker = null;
+    const map = L.map('map'); // Inicializa o mapa sem setView fixa
+    let clienteMarker = null;
+    let mecanicoMarker = null;
 
-// Adiciona o mapa base
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; OpenStreetMap contributors'
-}).addTo(map);
+    // Adiciona o mapa base
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
 
-// Obtém a localização do cliente e centraliza o mapa
-navigator.geolocation.watchPosition((pos) => {
-  const lat = pos.coords.latitude;
-  const lng = pos.coords.longitude;
+    // Obtém a localização do cliente e centraliza o mapa
+    navigator.geolocation.watchPosition((pos) => {
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
 
-  // Centraliza o mapa uma única vez (se necessário)
-  if (!map._initialCenterSet) {
-    map.setView([lat, lng], 15);
-    map._initialCenterSet = true;
-  }
-
-  // Cria ou atualiza marcador do cliente
-  if (!clienteMarker) {
-    clienteMarker = L.circleMarker([lat, lng], {
-      radius: 10,
-      color: '#000',
-      fillColor: '#9C0D11',
-      fillOpacity: 0.8,
-      weight: 2
-    }).addTo(map).bindTooltip("Você", { permanent: false, direction: "top" });
-  } else {
-    clienteMarker.setLatLng([lat, lng]);
-  }
-
-  // Envia localização do cliente ao servidor
-  fetch('/location-update', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ type: 'cliente', lat, lng })
-  });
-
-}, (err) => {
-  console.error("Erro ao acessar GPS:", err.message);
-  map.setView([-20.1715, -40.2519], 15); // fallback para Vitória
-});
-
-// Atualiza a posição do mecânico no mapa
-setInterval(() => {
-  fetch('/location-get')
-    .then(res => res.json())
-    .then(data => {
-      const mecanico = data.find(p => p.type === 'mecanico');
-      if (mecanico) {
-        if (!mecanicoMarker) {
-          mecanicoMarker = L.circleMarker([mecanico.lat, mecanico.lng], {
-            radius: 10,
-            color: '#FF4500',
-            fillColor: '#FF6347',
-            fillOpacity: 0.8,
-            weight: 2
-          }).addTo(map).bindTooltip("Mecânico", { permanent: false, direction: "top" });
-        } else {
-          mecanicoMarker.setLatLng([mecanico.lat, mecanico.lng]);
-        }
+      // Centraliza o mapa uma única vez (se necessário)
+      if (!map._initialCenterSet) {
+        map.setView([lat, lng], 15);
+        map._initialCenterSet = true;
       }
-    })
-    .catch(err => console.error("Erro ao buscar localização:", err));
-}, 5000);
+
+      // Cria ou atualiza marcador do cliente
+      if (!clienteMarker) {
+        clienteMarker = L.circleMarker([lat, lng], {
+          radius: 10,
+          color: '#000',
+          fillColor: '#9C0D11',
+          fillOpacity: 0.8,
+          weight: 2
+        }).addTo(map).bindTooltip("Você", { permanent: false, direction: "top" });
+      } else {
+        clienteMarker.setLatLng([lat, lng]);
+      }
+
+      // Envia localização do cliente ao servidor
+      fetch('/location-update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'cliente', lat, lng })
+      });
+
+    }, (err) => {
+      console.error("Erro ao acessar GPS:", err.message);
+      map.setView([-20.1715, -40.2519], 15); // fallback para Vitória
+    });
+
+    // Atualiza a posição do mecânico no mapa
+    setInterval(() => {
+      fetch('/location-get')
+        .then(res => res.json())
+        .then(data => {
+          const mecanico = data.find(p => p.type === 'mecanico');
+          if (mecanico) {
+            if (!mecanicoMarker) {
+              mecanicoMarker = L.circleMarker([mecanico.lat, mecanico.lng], {
+                radius: 10,
+                color: '#FF4500',
+                fillColor: '#FF6347',
+                fillOpacity: 0.8,
+                weight: 2
+              }).addTo(map).bindTooltip("Mecânico", { permanent: false, direction: "top" });
+            } else {
+              mecanicoMarker.setLatLng([mecanico.lat, mecanico.lng]);
+            }
+          }
+        })
+        .catch(err => console.error("Erro ao buscar localização:", err));
+    }, 5000);
 
 
-  // === STATUS DO PEDIDO ===
+    // === STATUS DO PEDIDO ===
 
 
 
-  //const requestId = localStorage.getItem("customer_id");
+    //const requestId = localStorage.getItem("customer_id");
 
-  //1 jul - Victor: Inserido requestID = 1; Bruto
-  const requestId = 1;
-  let pedidoAceitoMostrado = false;
+    //1 jul - Victor: Inserido requestID = 1; Bruto
+    const requestId = 1;
+    let pedidoAceitoMostrado = false;
 
-  async function checarStatusPedido() {
+    async function checarStatusPedido() {
 
-    if (!requestId) return;
+      if (!requestId) return;
 
-    try {
+      try {
 
-      const res = await fetch(`/status-solicitacao/${requestId}`);
+        const res = await fetch(`/status-solicitacao/${requestId}`);
 
-      if (!res.ok) throw new Error('Erro ao buscar status');
+        if (!res.ok) throw new Error('Erro ao buscar status');
 
-      const data = await res.json();
+        const data = await res.json();
 
-      console.log(data);
+        console.log(data);
 
-      if (data.status === 'aceito') {
-        if (!pedidoAceitoMostrado) {
-          pedidoAceitoMostrado = true;
-          alert('Seu pedido foi aceito! O borracheiro está a caminho.');
-          localStorage.removeItem("request_id");
-        }
+        if (data.status === 'aceito') {
+          if (!pedidoAceitoMostrado) {
+            pedidoAceitoMostrado = true;
+            alert('Seu pedido foi aceito! O borracheiro está a caminho.');
+            localStorage.removeItem("request_id");
+          }
 
-        const container = document.getElementById('pedidoAceito');
-        container.style.display = 'block';
-        container.innerHTML = `
+          const container = document.getElementById('pedidoAceito');
+          container.style.display = 'block';
+          container.innerHTML = `
           <h3>Pedido Aceito</h3>
           <p><strong>Veículo:</strong> ${data.veiculo}</p>
           <p><strong>Placa:</strong> ${data.placa}</p>
           <p><strong>Status:</strong> ${data.status}</p>
         `;
-      } else {
-        document.getElementById('pedidoAceito').style.display = 'none';
+        } else {
+          document.getElementById('pedidoAceito').style.display = 'none';
+        }
+
+      } catch (err) {
+        console.error(err);
       }
-
-    } catch (err) {
-      console.error(err);
     }
-  }
 
-  setInterval(checarStatusPedido, 3000);
-  checarStatusPedido();
+    setInterval(checarStatusPedido, 3000);
+    checarStatusPedido();
   </script>
 </body>
+
 </html>
