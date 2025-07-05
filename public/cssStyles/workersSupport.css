@@ -16,6 +16,7 @@ body .topbar {
     max-width: 500px;
     width: 100%;
     padding: 24px 14px;
+    height: 63px;
     border: none;
     border-radius: var(--radius);
     background-color: var(--primary-color);
@@ -23,7 +24,7 @@ body .topbar {
     font-weight: 600;
     font-size: 18px;
     letter-spacing: 1px;
-    gap: 20px;
+    box-shadow: var(--shadow);
 }
 
 body .topbar a {
@@ -40,21 +41,55 @@ body h3{
     color: var(--text-color-light);
 }
 
-body select{
-    max-width: 500px;
+body .select {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     width: 100%;
-    padding: 10px;
-    border-radius: var(--radius);
+    max-width: 500px;
 }
 
-body textarea{
-    margin-top: -50px;
+body .select p{
+    font-weight: 600;
+    color: var(--text-color-light);
+}
+
+body .select select{
+    max-width: 500px;
+    width: 100%;
+    padding: 10px 25px;
+    border-radius: var(--radius);
+    border: none;
+    outline: none;
+    height: 63px;
+    background-color: var(--background-button);
+    box-shadow: var(--shadow);
+}
+
+body .textarea{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 500px;
+}
+
+body .textarea p{
+    font-weight: 600;
+    color: var(--text-color-light);
+}
+
+body .textarea textarea{
     max-width: 500px;
     width: 100%;
     height: 200px;
-    padding: 10px;
+    padding: 20px;
     resize: none;
     border-radius: var(--radius);
+    border: none;
+    outline: none;
+    background-color: var(--background-button);
+    box-shadow: var(--shadow);
 }
 
 body button{
@@ -71,6 +106,7 @@ body button{
     font-weight: 600;
     font-size: 16px;
     letter-spacing: 1px;
-    margin-top: 130px;
+    margin-top: 50px;
     cursor: pointer;
+    box-shadow: var(--shadow);
 }

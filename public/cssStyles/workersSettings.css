@@ -15,6 +15,7 @@ body .topbar{
     justify-content: center;
     max-width: 500px;
     width: 100%;
+    height: 63px;
     padding: 24px 14px;
     border: none;
     border-radius: var(--radius);
@@ -23,6 +24,7 @@ body .topbar{
     font-weight: 600;
     font-size: 18px;
     letter-spacing: 1px;
+    box-shadow: var(--shadow);
 }
 
 body .topbar a{
@@ -45,13 +47,25 @@ body .buttons a{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
-    border: 1px solid var(--border-color-light);
+    height: 63px;
+    padding: 10px 25px;
+    background-color: var(--background-button);
     border-radius: var(--radius);
-    color: var(--text-color-light);
+    color: var(--black);
     font-weight: 500;
+    box-shadow: var(--shadow);
 }
 
 body .buttons a i{
     font-size: 20px;
+}
+
+body .buttons a .left{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+body .buttons a .left i{
+    font-size: 25px;
 }

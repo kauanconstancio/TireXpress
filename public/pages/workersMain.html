@@ -31,7 +31,7 @@
     }
 
     .solicitacoes-container button {
-      background-color: #28a745;
+      background-color: var(--primary-color);
       color: white;
       border: none;
       padding: 5px 10px;
@@ -44,14 +44,10 @@
 <body>
   <div id="map"></div>
 
-  <div class="conect">
-    <button class="searchButton" id="btnConectar">Conectar</button>
-  </div>
+    <button class="conectButton" id="btnConectar">Conectar</button>
 
   <div class="footerMenu">
-    <a href="#"><i class="fa-solid fa-house"></i></a>
-    <a href="workersWallet.html"><i class="fa-solid fa-wallet"></i></a>
-    <a href="workersPerfil.html"><i class="fa-solid fa-user"></i></a>
+    <a href="workersPerfil.html"><i class="fa-solid fa-circle-user"></i></a>
   </div>
   <!-- Div para exibir solicitações -->
   <div id="solicitacoes" class="solicitacoes-container"></div>

@@ -16,6 +16,7 @@ body .topbar{
     max-width: 500px;
     width: 100%;
     padding: 24px 14px;
+    height: 63px;
     border: none;
     border-radius: var(--radius);
     background-color: var(--primary-color);
@@ -23,6 +24,7 @@ body .topbar{
     font-weight: 600;
     font-size: 18px;
     letter-spacing: 1px;
+    box-shadow: var(--shadow);
 }
 
 body .topbar a{
@@ -37,6 +39,25 @@ body h2{
     color: var(--text-color-light);
 }
 
+body .saldo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+body .saldo p{
+    font-weight: 500;
+    font-size: 24px;
+    color: var(--text-color-light);
+}
+
+body .saldo h2{
+    font-size: 36px;
+    font-weight: bold;
+    color: var(--text-color-light);
+}
+
 body .line {
     max-width: 500px;
     width: 100%;
@@ -45,25 +66,88 @@ body .line {
     background-color: var(--text-color-light);
 }
 
-body .paymentMethods{
+.paymentMethods{
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
     max-width: 500px;
     width: 100%;
-    margin-top: -40px;
 }
 
-body .paymentMethods a{
+.paymentMethods p{
+    font-weight: 600;
+    color: var(--text-color-light);
+}
+
+.paymentMethods .payment-option {
+    max-width: 500px;
+    width: 100%;
+    background-color: var(--background-button);
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.paymentMethods .payment-option .left{
     display: flex;
     align-items: center;
-    padding: 5px 14px;
-    border: 1px solid var(--border-color-light);
-    border-radius: var(--radius);
-    color: var(--text-color-light);
-    gap: 15px;
+    gap: 20px;
 }
 
-body .paymentMethods p{
+.paymentMethods .payment-option .left p{
+    font-weight: 600;
+    color: var(--black);
+}
+
+.paymentMethods .payment-option input[type="radio"] {
+    /* Esconde o rádio padrão */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--black);
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+/* O círculo interno quando selecionado */
+.paymentMethods .payment-option input[type="radio"]::before {
+    content: '';
+    display: block;
+    width: 14px;
+    height: 14px;
+    background-color: var(--black);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    /* Começa invisível */
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Animação do círculo interno quando selecionado */
+.paymentMethods .payment-option input[type="radio"]:checked::before {
+    transform: translate(-50%, -50%) scale(1);
+    /* Torna visível */
+}
+
+.paymentMethods .payment-option label {
+    flex-grow: 1;
+    /* Permite que o label ocupe o espaço restante */
+    font-size: 1.1em;
+    font-weight: bold;
     color: var(--text-color-light);
+    cursor: pointer;
 }

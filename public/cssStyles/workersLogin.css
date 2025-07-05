@@ -4,30 +4,51 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    height: 100vh;
 }
 
 body img{
     width: 300px;
 }
 
+body .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+}
+
 body .form{
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 10px;
     max-width: 500px;
     width: 100%;
+    margin-bottom: 120px;
 }
 
 body .form .inputs{
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 30px;
     flex-direction: column;
 }
 
-body .form .inputs input{
+body .form .inputs ul{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 500px;
+}
+
+body .form .inputs ul li{
+    list-style: none;
+}
+
+body .form .inputs ul li input{
     display: flex;
     max-width: 500px;
     width: 100%;
@@ -35,6 +56,7 @@ body .form .inputs input{
     border: none;
     border-radius: var(--radius);
     background-color: var(--background-button);
+    box-shadow: var(--shadow);
     outline: none;
 }
 
@@ -52,26 +74,35 @@ body .form #loginButton{
     font-weight: 600;
     font-size: 16px;
     letter-spacing: 1px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    margin-top: 30px;
 }
 
-body .form a{
+body  .container a{
+    display: flex;
+    justify-content: center;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+body .container .footer{
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: -35px;
-    color: var(--primary-color);
-    font-weight: 500;
+    width: 100%;
+    max-width: 500px;
 }
 
-body .footer{
+body .container .footer p{
     display: flex;
-    margin-top: 170px;
-}
-
-body .footer p{
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 500px;
     font-weight: 500;
 }
 
-body .footer p a{
+body .container .footer p a{
     color: var(--primary-color);
 }

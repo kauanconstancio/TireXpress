@@ -34,6 +34,10 @@ body .topbar a {
     left: 60px;
 }
 
+body .topbar p{
+    color: var(--white);
+}
+
 .container {
     max-width: 500px;
     width: 100%;
@@ -100,5 +104,5 @@ a:hover {
 }
 
 .contact-info p{
-    color: var(--background-color-light);
+    color: var(--text-color-light);
 }
