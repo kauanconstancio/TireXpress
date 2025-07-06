@@ -11,9 +11,13 @@ body{
 }
 
 body #map{
-    height: 70vh;
+    height: 1400px;
     max-width: 500px;
     width: 100vw;
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
 }
 
 body .conectButton{
