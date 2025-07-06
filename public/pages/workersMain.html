@@ -61,7 +61,7 @@
   <!-- LEAFLET -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    let map = L.map('map'); // Inicializa o mapa sem setView ainda
+   const map = L.map('map'); // Inicializa o mapa sem setView fixa
     let clienteMarker = null;
     let mecanicoMarker = null;
 
@@ -70,22 +70,23 @@
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // Obtém a localização do mecânico e centraliza o mapa
+    // Obtém a localização do cliente e centraliza o mapa
     navigator.geolocation.watchPosition((pos) => {
       const lat = pos.coords.latitude;
       const lng = pos.coords.longitude;
 
-      // Centraliza o mapa apenas uma vez
-      if (!map.getCenter().lat && !map.getCenter().lng) {
+      // Centraliza o mapa uma única vez (se necessário)
+      if (!map._initialCenterSet) {
         map.setView([lat, lng], 15);
+        map._initialCenterSet = true;
       }
 
-      // Cria ou atualiza marcador do mecânico
-      if (!mecanicoMarker) {
-        mecanicoMarker = L.circleMarker([lat, lng], {
+      // Cria ou atualiza marcador do cliente
+      if (!clienteMarker) {
+        clienteMarker = L.circleMarker([lat, lng], {
           radius: 10,
-          color: '#FF4500',
-          fillColor: '#FF6347',
+          color: '#000',
+          fillColor: '#9C0D11',
           fillOpacity: 0.8,
           weight: 2
         }).addTo(map).bindTooltip("Você", { permanent: false, direction: "top" });
@@ -93,19 +94,19 @@
         mecanicoMarker.setLatLng([lat, lng]);
       }
 
-      // Envia localização do mecânico ao servidor
+      // Envia localização do cliente ao servidor
       fetch('/location-update', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'mecanico', lat, lng })
+        body: JSON.stringify({ type: 'cliente', lat, lng })
       });
+
     }, (err) => {
-      console.error("Erro ao acessar GPS:", err);
-      map.setView([-20.1715, -40.2519], 15); // Fallback
+      console.error("Erro ao acessar GPS:", err.message);
+      map.setView([-20.1715, -40.2519], 15); // fallback para Vitória
     });
 
-
-    // Atualiza a posição do cliente no mapa
+    // Atualiza a posição do mecânico no mapa
     setInterval(() => {
       fetch('/location-get')
         .then(res => res.json())
@@ -115,8 +116,8 @@
             if (!clienteMarker) {
               clienteMarker = L.circleMarker([cliente.lat, cliente.lng], {
                 radius: 10,
-                color: '#000',
-                fillColor: '#9C0D11',
+                color: '#FF4500',
+                fillColor: '#FF6347',
                 fillOpacity: 0.8,
                 weight: 2
               }).addTo(map).bindTooltip("Cliente", { permanent: false, direction: "top" });
@@ -124,7 +125,8 @@
               clienteMarker.setLatLng([cliente.lat, cliente.lng]);
             }
           }
-        });
+        })
+        .catch(err => console.error("Erro ao buscar localização:", err));
     }, 5000);
 
 

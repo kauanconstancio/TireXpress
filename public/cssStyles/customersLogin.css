@@ -27,7 +27,24 @@ body .form .inputs{
     flex-direction: column;
 }
 
-body .form .inputs input{
+body .form .inputs ul{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 500px;
+}
+
+body .form .inputs ul li{
+    list-style: none;
+}
+
+body .form .inputs ul li p{
+    font-size: 18px;
+    font-weight: 600;
+}
+
+body .form .inputs ul li input{
     display: flex;
     width: 100%;
     padding: 18px 14px;
@@ -35,6 +52,7 @@ body .form .inputs input{
     border-radius: var(--radius);
     background-color: var(--background-button);
     outline: none;
+    box-shadow: var(--shadow);
 }
 
 body .form #loginButton{
@@ -50,6 +68,7 @@ body .form #loginButton{
     font-weight: 600;
     font-size: 16px;
     letter-spacing: 1px;
+    box-shadow: var(--shadow);
 }
 
 body .form a{

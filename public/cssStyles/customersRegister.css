@@ -58,7 +58,26 @@ body .form .inputs .inputImage .imageInput{
     display: none;
 }
 
-body .form .inputs input{
+body .form .inputs ul{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 500px;
+}
+
+body .form .inputs ul li{
+    list-style: none;
+    width: 100%;
+    max-width: 500px;
+}
+
+body .form .inputs ul li p{
+    font-size: 18px;
+    font-weight: 600;
+}
+
+body .form .inputs ul li input{
     display: flex;
     max-width: 500px;
     width: 100%;
@@ -67,6 +86,7 @@ body .form .inputs input{
     border-radius: var(--radius);
     background-color: var(--background-button);
     outline: none;
+    box-shadow: var(--shadow);
 }
 
 body .form .inputs .password{
@@ -74,7 +94,21 @@ body .form .inputs .password{
     gap: 10px;
 }
 
-body .form .inputs .password input{
+body .form .inputs .password ul{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+    max-width: 500px;
+}
+
+body .form .inputs .password ul li{
+    list-style: none;
+    width: 100%;
+    max-width: 500px;
+}
+
+body .form .inputs .password ul li input{
     width: 100%;
 }
 
@@ -94,6 +128,7 @@ body #registerButton{
     font-size: 16px;
     letter-spacing: 1px;
     cursor: pointer;
+    box-shadow: var(--shadow);
 }
 
 body .footer{

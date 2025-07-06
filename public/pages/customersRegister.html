@@ -19,12 +19,36 @@
                 <input class="imageInput" type="file" accept="image/*" required>
                 <span class="picture__image"></span>
             </label>
-            <input type="text" name="name" placeholder="Nome completo" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="number" name="cpf" placeholder="CPF" required maxlength="11">
-            <input type="tel" name="phone" placeholder="Número de telefone" required>
-            <input type="password" name="password" placeholder="Senha" required>
-            <input type="password" name="confirmPassword" placeholder="Confirme sua senha" required>
+            <ul>
+                <li>
+                    <p>Nome completo:</p>
+                    <input type="text" name="name" required>
+                </li>
+                <li>
+                    <p>E-mail:</p>
+                    <input type="email" name="email" required>
+                </li>
+                <li>
+                    <p>CPF:</p>
+                    <input type="number" name="cpf" required maxlength="11">
+                </li>
+                <li>
+                    <p>Número de telefone:</p>
+                    <input type="tel" name="phone" required>
+                </li>
+            </ul>
+            <div class="password">
+                <ul>
+                    <li>
+                        <p>Senha:</p>
+                        <input type="password" name="password" required>
+                    </li>
+                    <li>
+                        <p>Confirmar senha:</p>
+                        <input type="password" name="confirmPassword" required>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     </div>
