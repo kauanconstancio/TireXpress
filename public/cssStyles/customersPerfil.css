@@ -1,12 +1,5 @@
 @import "global.css";
 
-body.dark-mode{
-    --background-color-light: #282828;
-    --text-color-light: #E0E0E0;
-    --border-color-light: #fff;
-    --white: #E0E0E0;
-}
-
 body{
     display: flex;
     flex-direction: column;
@@ -23,6 +16,7 @@ body .topbar{
     max-width: 500px;
     width: 100%;
     padding: 24px 14px;
+    height: 63px;
     border: none;
     border-radius: var(--radius);
     background-color: var(--primary-color);
@@ -30,6 +24,7 @@ body .topbar{
     font-weight: 600;
     font-size: 18px;
     letter-spacing: 1px;
+    box-shadow: var(--shadow);
 }
 
 body .topbar a{
@@ -50,7 +45,7 @@ body .user{
 body .user img{
     width: 200px;
     height: 200px;
-    border: 1px solid var(--border-color-light);
+    border: 1px solid var(--radiobutton-color-light);
     border-radius: 50%;
 }
 
@@ -76,13 +71,15 @@ body .pages a{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
+    padding: 10px 25px;
     border-radius: var(--radius);
     max-width: 500px;
     width: 100%;
+    height: 63px;
     background-color: var(--primary-color);
     color: var(--white);
     font-weight: 500;
+    box-shadow: var(--shadow);
 }
 
 body .pages a .left{

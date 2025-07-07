@@ -46,6 +46,7 @@ body .searchButton{
     letter-spacing: 1px;
     z-index: 2;
     bottom: 95px;
+    box-shadow: var(--shadow);
 }
 
 body .searchButton a{

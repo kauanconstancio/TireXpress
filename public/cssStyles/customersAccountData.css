@@ -22,6 +22,7 @@ body .topbar{
     justify-content: center;
     max-width: 500px;
     width: 100%;
+    height: 63px;
     padding: 24px 14px;
     border: none;
     border-radius: var(--radius);
@@ -30,6 +31,7 @@ body .topbar{
     font-weight: 600;
     font-size: 18px;
     letter-spacing: 1px;
+    box-shadow: var(--shadow);
 }
 
 body .topbar a{
@@ -53,7 +55,7 @@ body .informations .name p,
 .cpf p,
 .number p{
     font-size: 18px;
-    font-weight: 400;
+    font-weight: 600;
     color: var(--text-color-light);
 }
 
@@ -61,10 +63,14 @@ body .informations .name h3,
 .email h3,
 .cpf h3,
 .number h3{
+    display: flex;
+    align-items: center;
     color: var(--text-color-light);
-    font-size: 15px;
-    border: 1px solid var(--border-color-light);
+    font-size: 16px;
+    background-color: var(--background-button);
     padding: 10px;
+    height: 63px;
     border-radius: var(--radius);
     font-weight: 500;
+    box-shadow: var(--shadow);
 }

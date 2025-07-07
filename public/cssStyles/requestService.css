@@ -23,6 +23,7 @@ body .topbar {
     max-width: 500px;
     width: 100%;
     padding: 24px 14px;
+    height: 63px;
     border: none;
     border-radius: var(--radius);
     background-color: var(--primary-color);
@@ -32,6 +33,7 @@ body .topbar {
     letter-spacing: 1px;
     gap: 20px;
     max-width: 800px;
+    box-shadow: var(--shadow);
 }
 
 body .topbar a {
@@ -52,16 +54,23 @@ body .servicesInput{
 
 body .servicesInput p{
     color: var(--text-color-light);
+    font-weight: 600;
+    font-size: 18px;
 }
 
 body .servicesInput select{
     max-width: 500px;
     width: 100%;
     padding: 10px;
+    height: 63px;
+    font-size: 16px;
+    font-weight: 500;
     border-radius: var(--radius);
-    background-color: var(--background-color-light);
-    border: 1px solid var(--border-color-light);
+    background-color: var(--background-button);
+    outline: none;
+    border: none;
     color: var(--text-color-light);
+    box-shadow: var(--shadow);
 }
 
 body .veicleInputs{
@@ -75,16 +84,22 @@ body .veicleInputs{
 
 body .veicleInputs p{
     color: var(--text-color-light);
+    font-weight: 600;
+    font-size: 18px;
 }
 
 body .veicleInputs select{
     max-width: 500px;
     width: 100%;
+    height: 63px;
     padding: 10px;
+    font-size: 16px;
+    font-weight: 500;
     border-radius: var(--radius);
-    background-color: var(--background-color-light);
-    border: 1px solid var(--border-color-light);
+    border: none;
+    background-color: var(--background-button);
     color: var(--text-color-light);
+    box-shadow: var(--shadow);
 }
 
 
@@ -96,6 +111,8 @@ body .textarea{
 
 body .textarea p{
     color: var(--text-color-light);
+    font-size: 18px;
+    font-weight: 500;
 }
 
 body .textarea textarea{
@@ -105,9 +122,12 @@ body .textarea textarea{
     padding: 10px;
     resize: none;
     border-radius: var(--radius);
-    background-color: var(--background-color-light);
-    border: 1px solid var(--border-color-light);
+    background-color: var(--background-button);
+    border: none;
     color: var(--text-color-light);
+    box-shadow: var(--shadow);
+    font-size: 16px;
+    outline: none;
 }
 
 body #requestService{
@@ -116,6 +136,7 @@ body #requestService{
     justify-content: center;
     max-width: 500px;
     width: 100%;
+    height: 63px;
     padding: 18px 14px;
     border: none;
     border-radius: var(--radius);
@@ -125,4 +146,5 @@ body #requestService{
     font-size: 16px;
     letter-spacing: 1px;
     cursor: pointer;
+    box-shadow: var(--radius);
 }

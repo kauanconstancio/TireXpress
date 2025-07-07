@@ -22,6 +22,7 @@ body .topbar {
     justify-content: center;
     max-width: 500px;
     width: 100%;
+    height: 63px;
     padding: 24px 14px;
     border: none;
     border-radius: var(--radius);
@@ -31,6 +32,7 @@ body .topbar {
     font-size: 18px;
     letter-spacing: 1px;
     gap: 20px;
+    box-shadow: var(--shadow);
 }
 
 body .topbar a {
@@ -50,11 +52,15 @@ body h3{
 body select{
     max-width: 500px;
     width: 100%;
+    height: 63px;
+    font-size: 16px;
+    font-weight: 500;
     padding: 10px;
     border-radius: var(--radius);
     color: var(--text-color-light);
-    border: 1px solid var(--border-color-light);
-    background-color: var(--background-color-light);
+    border: none;
+    background-color: var(--background-button);
+    box-shadow: var(--shadow);
 }
 
 body textarea{
@@ -65,9 +71,12 @@ body textarea{
     padding: 10px;
     resize: none;
     border-radius: var(--radius);
-    background-color: var(--background-color-light);
-    border: 1px solid var(--border-color-light);
+    background-color: var(--background-button);
+    border: none;
     color: var(--text-color-light);
+    box-shadow: var(--shadow);
+    font-size: 16px;
+    font-weight: 500;
 }
 
 body button{
@@ -76,6 +85,7 @@ body button{
     justify-content: center;
     max-width: 500px;
     width: 100%;
+    height: 63px;
     padding: 18px 14px;
     border: none;
     border-radius: var(--radius);
@@ -86,4 +96,5 @@ body button{
     letter-spacing: 1px;
     margin-top: 130px;
     cursor: pointer;
+    box-shadow: var(--shadow);
 }

@@ -23,6 +23,7 @@ body .topbar{
     max-width: 500px;
     width: 100%;
     padding: 24px 14px;
+    height: 63px;
     border: none;
     border-radius: var(--radius);
     background-color: var(--primary-color);
@@ -30,6 +31,7 @@ body .topbar{
     font-weight: 600;
     font-size: 18px;
     letter-spacing: 1px;
+    box-shadow: var(--shadow);
 }
 
 body .topbar a{
@@ -48,7 +50,8 @@ body .balance{
 }
 
 body .balance h2{
-    font-size: 30px;
+    font-size: 32px;
+    font-weight: 600;
     color: var(--text-color-light);
 }
 
@@ -74,7 +77,7 @@ body .line {
 body .paymentMethods{
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
     max-width: 500px;
     width: 100%;
     margin-top: -40px;
@@ -82,17 +85,27 @@ body .paymentMethods{
 
 body .paymentMethods p{
     color: var(--text-color-light);
+    font-weight: 600;
+    font-size: 18px;
 }
 
 
 body .paymentMethods a{
     display: flex;
     align-items: center;
+    height: 63px;
+    background-color: var(--background-button);
     padding: 5px 14px;
-    border: 1px solid var(--border-color-light);
+    box-shadow: var(--shadow);
     border-radius: var(--radius);
     color: var(--text-color-light);
     gap: 15px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+body .paymentMethods a i{
+    font-size: 18px;
 }
 
 body .paymentMethods button{
@@ -101,6 +114,7 @@ body .paymentMethods button{
     justify-content: center;
     max-width: 500px;
     width: 100%;
+    height: 63px;
     padding: 18px 14px;
     border: none;
     border-radius: var(--radius);
@@ -111,4 +125,5 @@ body .paymentMethods button{
     letter-spacing: 1px;
     margin-top: 50px;
     cursor: pointer;
+    box-shadow: var(--shadow);
 }
